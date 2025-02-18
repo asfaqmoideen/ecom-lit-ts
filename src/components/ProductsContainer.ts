@@ -10,7 +10,7 @@ export class ProductsContainer extends LitElement{
 
     render(){
         if(this.products.length === 0){
-            return html`Loading Products..`
+            return html`<h2>Loading Products..<h2>`
         }
 
         return html `
@@ -34,13 +34,13 @@ export class ProductsContainer extends LitElement{
         align-items:center;
         justify-content :center;
         }
-        // :hover{
-        // transform : scale(1.1)
-        // }
         p, h4{
             margin:0;
         }
-
+            
+        .productCard:hover {
+            transform: scale(1.05);
+        }
         .productCard{
         height: 250px;
         width : 250px;

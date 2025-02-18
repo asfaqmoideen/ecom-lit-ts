@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import { headerItems } from "../constants/appconstants";
+import "./HeaderSearch";
 
 
 @customElement("custom-header")
@@ -9,7 +10,7 @@ export class CustomHeader extends LitElement{
     render(){
         return html `
     <h2><img src="/public/image.png" class="headerimg" alt="Logo" /> SamrtEcom</h2>
-    <input type="text" id="headersearch" placeholder="Search your favourite product "/>
+    <ecom-headersearch></ecom-headersearch>
     <ul>
         ${headerItems.map(item => (html`<li> <a href =${item.href} />${item.name} </li>`))}
     </ul>
@@ -23,7 +24,7 @@ export class CustomHeader extends LitElement{
             justify-content : space-between;
             align-items : center;
             color: white;
-          background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+            background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
             margin :1rem;
             border-radius :1.5rem;
             font-family : roboto;
@@ -51,14 +52,6 @@ export class CustomHeader extends LitElement{
         heigth: 2rem;
         width :2rem;
         margin : 0 .5rem ;
-        }
-
-        #headersearch{
-        width : 300px;
-        padding : .5rem;
-        border-radius : .7rem;
-        text-align :center;
-        border: none;
         }
     `
 }

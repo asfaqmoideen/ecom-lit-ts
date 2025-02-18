@@ -4,13 +4,6 @@ import './CustomHeader'
 import './CustomFooter'
 import './CustomContainer'
 
-
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('ecom-root')
 export class EcomRoot extends LitElement {
 
