@@ -2,13 +2,13 @@ import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 
 
-@customElement("custom-footer")
-export class CustomFooter extends LitElement{
+@customElement("ecom-sidebar")
+export class SidebarContainer extends LitElement{
 
     render(){
         return html `
         <div>
-        <p>Copyrights @ Smart E-com  ${new Date().getFullYear()}</p>
+        
         </div>`;
     }
 
@@ -17,9 +17,11 @@ export class CustomFooter extends LitElement{
             all : initial;
             background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
         }
+
         p{
         padding : 0;
         }
+        
         div{   
             width :100%;
             display : flex;

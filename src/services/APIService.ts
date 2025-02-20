@@ -31,11 +31,19 @@ export class APIService{
         );
       }
     
-      async searchProduct(user :number) {
-        return this.tryFetchingData(`${this.baseURL}/search?q=${user}`);
+      async searchProduct(productname :string) {
+        return this.tryFetchingData(`${this.baseURL}/search?q=${productname}`);
       }
     
       async getProducts(limit :number, skip:number){
         return await this.tryFetchingData(`${this.baseURL}?limit=${limit}&skip=${skip}`)
+      }
+
+      async getProductCategories(){
+        return await this.tryFetchingData(`${this.baseURL}/category-list`)
+      }
+
+      async getProductsByCategory(category :string) {
+        return await this.tryFetchingData(`${this.baseURL}/category/${category}`)
       }
 }

@@ -10,7 +10,7 @@ export class ProductsContainer extends LitElement{
 
     render(){
         if(this.products.length === 0){
-            return html`<h2>Loading Products..<h2>`
+            return html`<h2>No products found<h2>`
         }
 
         return html `
@@ -34,7 +34,8 @@ export class ProductsContainer extends LitElement{
         align-items:center;
         justify-content :center;
         }
-        p, h4{
+        
+        p,h4{
             margin:0;
         }
             

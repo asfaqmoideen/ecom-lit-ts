@@ -8,16 +8,14 @@ import './CustomContainer'
 export class EcomRoot extends LitElement {
 
 
-  @property({ type: Number })
-  count = 0
-
   render() {
     return html`
       <custom-header></custom-header>
 
       <custom-container></custom-container>
+      
+      <custom-footer></custom-footer>
       `
-      // <custom-footer></custom-footer>
   }
 
 

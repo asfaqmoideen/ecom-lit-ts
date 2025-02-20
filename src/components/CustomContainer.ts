@@ -1,7 +1,9 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
-import { APIService } from "../services/UsersAPIService";
+import { customElement, state } from "lit/decorators.js";
+import { APIService } from "../services/APIService";
 import "./ProductsContainer"
+import "./MasterSearch"
+
 
 @customElement("custom-container")
 export class CustomContainer extends LitElement{
@@ -12,11 +14,25 @@ export class CustomContainer extends LitElement{
     async connectedCallback() {
         super.connectedCallback();
         const data = await this.api.getAllProducts();
-        this.products  = data.products || [];
+        this.products  = data.products ;
     }
 
+    private async handleSearch(event: CustomEvent) {
+        const query = event.detail.query.toLowerCase();
+        const data = await this.api.searchProduct(query);
+        this.products = data.products;
+    }
+
+    private async handleCategory(event: CustomEvent) {
+        const query = event.detail.query;
+        console.log(query);
+        const data = await this.api.getProductsByCategory(query);
+        this.products = data.products ;
+    }
+    
     render(){
         return html `
+        <ecom-mastersearch @search-changed=${this.handleSearch} @category-clicked=${this.handleCategory}></ecom-mastersearch>
         <ecom-productscontainer .products=${this.products}></ecom-productscontainer>
         `;
     }
@@ -24,7 +40,7 @@ export class CustomContainer extends LitElement{
     static styles = css`
         :host{ 
         all : initial;
-        flex:1; 
+        flex:1;
         margin:1rem;
         }
 
