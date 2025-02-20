@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement, state, property, } from "lit/decorators.js";
 import { APIService } from "../services/APIService";
 import "./ProductsContainer"
 import "./MasterSearch"
@@ -10,7 +10,8 @@ export class CustomContainer extends LitElement{
 
     private api = new APIService();
     @state() private products : any[] = [];
-        
+    
+
     async connectedCallback() {
         super.connectedCallback();
         const data = await this.api.getAllProducts();
@@ -46,5 +47,6 @@ export class CustomContainer extends LitElement{
 
     `
 }
+
 
 

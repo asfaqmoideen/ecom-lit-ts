@@ -1,21 +1,42 @@
 import { LitElement, css, html } from 'lit'
-import { customElement, property } from 'lit/decorators.js'
+import { customElement, property, state } from 'lit/decorators.js'
 import './CustomHeader'
 import './CustomFooter'
 import './CustomContainer'
+import './AccountContainer'
+import './CartContianer'
 
 @customElement('ecom-root')
 export class EcomRoot extends LitElement {
 
+  @state()
+  currentPage : string = 'home';
+
+  private handleNavClick(event : CustomEvent){
+    this.currentPage = event.detail.id;
+  }
 
   render() {
-    return html`
-      <custom-header></custom-header>
+    switch(this.currentPage) {
+      case "home":
+        return html` 
+          <custom-header @nav-clicked=${this.handleNavClick}></custom-header>
+          <custom-container></custom-container>
+          <custom-footer></custom-footer>`
 
-      <custom-container></custom-container>
-      
-      <custom-footer></custom-footer>
-      `
+      case "cart":
+        return html`
+          <custom-header @nav-clicked=${this.handleNavClick}></custom-header>
+          <cart-container></cart-container>
+          <custom-footer></custom-footer>`
+
+      case "account":
+        return html`
+        <custom-header @nav-clicked=${this.handleNavClick}></custom-header>
+        <account-container></account-container>
+        <custom-footer></custom-footer>
+        `
+    }
   }
 
 

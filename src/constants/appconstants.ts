@@ -6,14 +6,14 @@ export const header = {
 export const headerItems  = [
     {
         name: "Home",
-        href: "./",
+        id: "home",
     },
     {
         name: "🛒Cart",
-        href: "./cart",
+        id: "cart",
     },
     {
         name: "👤Account",
-        href: "./account"
+        id: "account"
     }
 ]

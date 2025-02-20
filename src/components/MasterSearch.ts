@@ -10,7 +10,7 @@ export class MasterSearch extends LitElement{
     private api = new APIService();
 
     @state() categories : string[] = [];
-    @state() private isFilterVisible = false;
+    @state() private isModalVisible = false;
 
     async connectedCallback(){
         super.connectedCallback();
@@ -29,33 +29,33 @@ export class MasterSearch extends LitElement{
     }
 
     private handleCategoryClick(event : Event) {
-        const listElement = event.target as HTMLOListElement;
+        const listElement = event.target as HTMLElement;
         this.dispatchEvent(new CustomEvent("category-clicked",{
             detail: { query : listElement.id },
             bubbles: true,
             composed : true
         }))
-        this.toggleFilter();
+        this.toggleCategoryModal();
     }
 
-    private toggleFilter() {
-      this.isFilterVisible = !this.isFilterVisible;
+    private toggleCategoryModal() {
+      this.isModalVisible = !this.isModalVisible;
     }
 
     
     render(){
         return html `
             <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
-            <button @click=${this.toggleFilter} class="applyFilter" >Select Category</button>
+            <button @click=${this.toggleCategoryModal} class="applycat" >Select Category</button>
 
-         ${this.isFilterVisible ? html`
+         ${this.isModalVisible ? html`
             <div class="overlay">
-              <div class="modal">
+              <div class="modal" >
                 <div class="headgrp">
                     <h2>Product Categories</h2>
-                    <button class="close" @click=${this.toggleFilter}>✖️</button>
+                    <button class="close" @click=${this.toggleCategoryModal}>✖️</button>
                 </div>
-                    <ul >
+                    <ul>
                         ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
                     </ul>
               </div>
@@ -71,7 +71,7 @@ export class MasterSearch extends LitElement{
         display: flex;
     }   
 
-    .applyFilter{
+    .applycat{
        margin-left:auto;
     }
 
@@ -81,7 +81,8 @@ export class MasterSearch extends LitElement{
 
     #headersearch {
         min-width: 500px;
-        padding: 0.7rem;
+        padding: 0.5rem;
+        font-size : 1.1rem;
         border-radius: 1rem;
         text-align: center;
         border: 1px green solid ;
@@ -101,7 +102,8 @@ export class MasterSearch extends LitElement{
     border:none;
     background : none;
     }
-    ul{
+
+    ul {
     display:flex;
     flex-wrap:wrap;
     list-style :none;
@@ -117,8 +119,8 @@ export class MasterSearch extends LitElement{
     cursor:pointer;
     }
 
-    .hidden{
-        display :none;
+    ul :hover {
+        transform: scale(1.05);
     }
     
     .overlay {
@@ -144,9 +146,6 @@ export class MasterSearch extends LitElement{
       text-align: center;
     }
 
-    .hidden {
-      display: none;
-    }
     
     .headgrp{
     display :flex;

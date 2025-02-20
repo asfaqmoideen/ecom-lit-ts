@@ -7,12 +7,25 @@ import "./MasterSearch";
 @customElement("custom-header")
 export class CustomHeader extends LitElement{
 
+    private handleNavigationClick(event : Event) {
+        const listElement = event.target as HTMLElement;
+        this.dispatchEvent(new CustomEvent("nav-clicked",{
+            detail: { id : listElement.id },
+            bubbles: true,
+            composed : true
+        }))
+    }
+
+    private handleTitleClick(){
+        document.location.href = "./";
+    }
+    
     render(){
-        return html `
-    <h2><img src=${header.logoPath}  class="headerimg" alt="Logo" /> ${header.title}</h2>
+    return html `
+    <h2 @click=${this.handleTitleClick}><img src=${header.logoPath} class="headerimg" alt="Logo" /> ${header.title}</h2>
     <ecom-headersearch></ecom-headersearch>
     <ul>
-        ${headerItems.map(item => (html`<li> <a href =${item.href} />${item.name} </li>`))}
+        ${headerItems.map(item => (html`<li @click=${this.handleNavigationClick} id=${item.id}>${item.name} </li>`))}
     </ul>
         `;
     }
@@ -37,16 +50,15 @@ export class CustomHeader extends LitElement{
         li{
             display:inline;
             padding-inline : .8rem;
-        }
-        ul a{
-        color: white;
-        font-weight:bold;
-        text-decoration:none;
+            color: white;
+            font-weight:bold;
+            cursor: pointer;
         }
 
         h2{
         display : flex;
         align-items :center;
+        cursor:pointer;
         }
         
         .headerimg{
