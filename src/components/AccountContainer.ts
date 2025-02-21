@@ -10,7 +10,7 @@ export class AccountContainer extends LitElement{
     
     render(){
         return html `
-        <h1> Accounts </h1>
+        <h1> Account </h1>
        `
     }
 

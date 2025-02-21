@@ -69,6 +69,7 @@ export class MasterSearch extends LitElement{
         all: initial;
         width: 100%;
         display: flex;
+        margin: 1rem;
     }   
 
     .applycat{

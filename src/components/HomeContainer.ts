@@ -5,8 +5,8 @@ import "./ProductsContainer"
 import "./MasterSearch"
 
 
-@customElement("custom-container")
-export class CustomContainer extends LitElement{
+@customElement("home-container")
+export class HomeContainer extends LitElement{
 
     private api = new APIService();
     @state() private products : any[] = [];

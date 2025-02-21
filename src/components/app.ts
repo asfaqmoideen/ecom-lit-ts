@@ -2,7 +2,7 @@ import { LitElement, css, html } from 'lit'
 import { customElement, property, state } from 'lit/decorators.js'
 import './CustomHeader'
 import './CustomFooter'
-import './CustomContainer'
+import './HomeContainer'
 import './AccountContainer'
 import './CartContianer'
 
@@ -21,7 +21,7 @@ export class EcomRoot extends LitElement {
       case "home":
         return html` 
           <custom-header @nav-clicked=${this.handleNavClick}></custom-header>
-          <custom-container></custom-container>
+          <home-container></home-container>
           <custom-footer></custom-footer>`
 
       case "cart":
