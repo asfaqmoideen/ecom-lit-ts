@@ -83,7 +83,7 @@ export class MasterSearch extends LitElement{
     #headersearch {
         min-width: 500px;
         padding: 0.5rem;
-        font-size : 1.1rem;
+        font-size : 1rem;
         border-radius: 1rem;
         text-align: center;
         border: 1px green solid ;
@@ -108,7 +108,7 @@ export class MasterSearch extends LitElement{
     display:flex;
     flex-wrap:wrap;
     list-style :none;
-    margin: 0;
+    margin:0;
     }
 
     ul li{

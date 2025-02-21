@@ -38,7 +38,7 @@ export class CustomHeader extends LitElement{
             align-items : center;
             color: white;
             background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
-            margin : .5rem 1rem;
+            margin : .5rem ;
             border-radius :1.5rem;
         }
 
