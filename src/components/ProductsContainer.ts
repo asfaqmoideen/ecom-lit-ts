@@ -2,13 +2,14 @@ import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import './ProductCard';
 import { ProductCard } from "./ProductCard";
+import Product from "../constants/ProductType";
 
 
 @customElement("ecom-productscontainer")
 export class ProductsContainer extends LitElement{
 
     @state()
-    products: any[] = [];
+    products: Product[] = [];
 
     @property()
     private isProductInfoVisible = false
@@ -66,7 +67,7 @@ export class ProductsContainer extends LitElement{
         :host{ 
         display:flex;
         flex-wrap: wrap;
-        align-items:center;
+        align-items:center; 
         justify-content :center;
         }
         

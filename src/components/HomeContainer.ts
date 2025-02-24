@@ -3,13 +3,14 @@ import { customElement, state, property, } from "lit/decorators.js";
 import { APIService } from "../services/APIService";
 import "./ProductsContainer"
 import "./MasterSearch"
+import Product from "../constants/ProductType";
 
 
 @customElement("home-container")
 export class HomeContainer extends LitElement{
 
     private api = new APIService();
-    @state() private products : any[] = [];
+    @state() private products : Product[] = [];
     
 
     async connectedCallback() {

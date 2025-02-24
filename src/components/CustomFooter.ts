@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-
+import { header } from "../constants/appconstants";
 
 @customElement("custom-footer")
 export class CustomFooter extends LitElement{
@@ -8,7 +8,7 @@ export class CustomFooter extends LitElement{
     render(){
         return html `
         <div>
-        <p>Copyrights @ Smart E-com  ${new Date().getFullYear()}</p>
+        <p>Copyrights @ ${header.title}  ${new Date().getFullYear()}</p>
         </div>`;
     }
 

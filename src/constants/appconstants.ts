@@ -1,5 +1,5 @@
 export const header = {
-    title : "Smart E-com",
+    title : "ByteBazaar",
     logoPath : "/public/image.png"
 }
 
