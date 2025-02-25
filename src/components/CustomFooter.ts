@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import { header } from "../constants/appconstants";
+import { AppTitle } from "../constants/appconstants";
 
 @customElement("custom-footer")
 export class CustomFooter extends LitElement{
@@ -8,7 +8,7 @@ export class CustomFooter extends LitElement{
     render(){
         return html `
         <div>
-        <p>Copyrights @ ${header.title}  ${new Date().getFullYear()}</p>
+        <p>Copyrights @ ${AppTitle.title}  ${new Date().getFullYear()}</p>
         </div>`;
     }
 

@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import './ProductCard';
+import './OverlayModal'
 import { ProductCard } from "./ProductCard";
 import Product from "../constants/ProductType";
 
@@ -8,14 +9,10 @@ import Product from "../constants/ProductType";
 @customElement("ecom-productscontainer")
 export class ProductsContainer extends LitElement{
 
-    @state()
-    products: Product[] = [];
+    @state() private products: Product[] = [];
+    @state() private clickedProduct :any = {}
+    @state() private isProductInfoVisible = false
 
-    @property()
-    private isProductInfoVisible = false
-
-    @state()
-    private clickedProduct :any = {}
 
     private toogleProductInfo(){
         this.isProductInfoVisible = !this.isProductInfoVisible;
@@ -38,14 +35,8 @@ export class ProductsContainer extends LitElement{
             `)}
 
             ${this.isProductInfoVisible ? html`
-                <div class="overlay">
-                    <div class="modal" >
-                        <div class="headgrp">
-                            <h2>Product Info</h2>
-                            <button class="close" @click=${this.toogleProductInfo}>✖️</button>
-                        </div>
-
-                            <div class="productgroup">
+                <overlay-modal @close-clicked=${this.toogleProductInfo} modalTitle = "Product Info"> 
+                    <div class="productgroup">
                                     <div class="imggrp">
                                         ${this.clickedProduct.images.map((img: string) => html`<img src=${img} alt="Product Image" />`)}
                                     </div>
@@ -55,9 +46,8 @@ export class ProductsContainer extends LitElement{
                                         <p id="detailsp"><span id="actualprice">$${this.clickedProduct.price}</span> $${this.clickedProduct.discountPercentage}
                                             ⭐${this.clickedProduct.rating}</p>
                                     </div>
-                            </div>
-                    </div>
-                </div>
+                            </div
+                </overlay-modal>
             `: ''}
 
         `;
@@ -102,40 +92,7 @@ export class ProductsContainer extends LitElement{
         opacity :.8;
         }
 
-        .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
 
-    .modal {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      min-width: 300px;
-      max-width : 600px;
-      max-height : 400px;
-      text-align: center;
-      overflow-y :auto;
-    }
-
-    .headgrp{
-    display :flex;
-    justify-content : space-between;
-    }
-    .close{
-    border:none;
-    background : none;
-    cursor:pointer;
-    }
 
     .productgroup img{
     height :150px;

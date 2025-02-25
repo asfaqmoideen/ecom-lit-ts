@@ -49,17 +49,11 @@ export class MasterSearch extends LitElement{
             <button @click=${this.toggleCategoryModal} class="applycat" >Select Category</button>
 
          ${this.isModalVisible ? html`
-            <div class="overlay">
-              <div class="modal" >
-                <div class="headgrp">
-                    <h2>Product Categories</h2>
-                    <button class="close" @click=${this.toggleCategoryModal}>✖️</button>
-                </div>
-                    <ul>
+            <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
+               <ul>
                         ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
-                    </ul>
-              </div>
-            </div>
+                </ul>
+            </overlay-modal>
           `: ''}
         `;
     }
@@ -122,35 +116,6 @@ export class MasterSearch extends LitElement{
 
     ul :hover {
         transform: scale(1.05);
-    }
-    
-    .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    .modal {
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-      min-width: 300px;
-      width : 600px;
-      text-align: center;
-    }
-
-    
-    .headgrp{
-    display :flex;
-    justify-content : space-between;
     }
 `;
 }

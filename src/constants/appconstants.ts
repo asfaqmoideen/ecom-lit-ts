@@ -1,4 +1,4 @@
-export const header = {
+export const AppTitle = {
     title : "ByteBazaar",
     logoPath : "/public/image.png"
 }

@@ -27,7 +27,6 @@ export class HomeContainer extends LitElement{
 
     private async handleCategory(event: CustomEvent) {
         const query = event.detail.query;
-        console.log(query);
         const data = await this.api.getProductsByCategory(query);
         this.products = data.products ;
     }

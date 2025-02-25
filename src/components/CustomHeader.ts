@@ -1,6 +1,6 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
-import { header, headerItems } from "../constants/appconstants";
+import { AppTitle, headerItems } from "../constants/appconstants";
 import "./MasterSearch";
 
 
@@ -22,7 +22,7 @@ export class CustomHeader extends LitElement{
     
     render(){
     return html `
-    <h2 @click=${this.handleTitleClick}><img src=${header.logoPath} class="headerimg" alt="Logo" /> ${header.title}</h2>
+    <h2 @click=${this.handleTitleClick}><img src=${AppTitle.logoPath} class="headerimg" alt="Logo" /> ${AppTitle.title}</h2>
     <ecom-headersearch></ecom-headersearch>
     <ul>
         ${headerItems.map(item => (html`<li @click=${this.handleNavigationClick} id=${item.id}>${item.name} </li>`))}
