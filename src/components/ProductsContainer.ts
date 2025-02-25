@@ -9,10 +9,15 @@ import Product from "../constants/ProductType";
 @customElement("ecom-productscontainer")
 export class ProductsContainer extends LitElement{
 
-    @state() private products: Product[] = [];
+    @property() private products: Product[] = [];
     @state() private clickedProduct :any = {}
     @state() private isProductInfoVisible = false
+    @state() private isLoading = true;
 
+    connectedCallback() {
+      super.connectedCallback();
+      setTimeout(() => {this.isLoading = false; }, 2000);
+    }
 
     private toogleProductInfo(){
         this.isProductInfoVisible = !this.isProductInfoVisible;
@@ -25,9 +30,14 @@ export class ProductsContainer extends LitElement{
     }
 
     render(){   
-        if(this.products.length === 0){
-            return html`<h2>No products found<h2>`
+        if (this.isLoading) {
+            return html`<h2>Loading Products...</h2>`;
         }
+
+        if(this.products.length === 0){
+            return html`<h2>No products found<h2>`;
+        }
+
 
         return html `
         ${this.products.map(product => html`

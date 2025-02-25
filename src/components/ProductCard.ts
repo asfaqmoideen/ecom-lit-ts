@@ -6,7 +6,7 @@ import Product from "../constants/ProductType";
 @customElement("ecom-productcard")
 export class ProductCard extends LitElement{
 
-    @property({ type: Object })
+    @property()
     product :any = {}
 
     render(){

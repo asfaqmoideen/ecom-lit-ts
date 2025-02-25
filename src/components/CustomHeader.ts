@@ -54,7 +54,6 @@ export class CustomHeader extends LitElement{
             font-weight:bold;
             cursor: pointer;
         }
-
         h2{
         display : flex;
         align-items :center;

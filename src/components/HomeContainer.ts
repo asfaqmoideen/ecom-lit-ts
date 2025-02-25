@@ -11,6 +11,7 @@ export class HomeContainer extends LitElement{
 
     private api = new APIService();
     @state() private products : Product[] = [];
+    @state() private resultTitle : string = "All Products";
     
 
     async connectedCallback() {
@@ -23,17 +24,19 @@ export class HomeContainer extends LitElement{
         const query = event.detail.query.toLowerCase();
         const data = await this.api.searchProduct(query);
         this.products = data.products;
+        this.resultTitle = query;
     }
 
     private async handleCategory(event: CustomEvent) {
         const query = event.detail.query;
         const data = await this.api.getProductsByCategory(query);
         this.products = data.products ;
+        this.resultTitle = query;
     }
     
     render(){
         return html `
-        <ecom-mastersearch @search-changed=${this.handleSearch} @category-clicked=${this.handleCategory}></ecom-mastersearch>
+        <ecom-mastersearch .title = ${this.resultTitle ? this.resultTitle : "All Products"} @search-changed=${this.handleSearch} @category-clicked=${this.handleCategory}></ecom-mastersearch>
         <ecom-productscontainer .products=${this.products}></ecom-productscontainer>
         `;
     }
