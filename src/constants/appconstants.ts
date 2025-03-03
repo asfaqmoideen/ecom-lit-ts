@@ -6,14 +6,14 @@ export const AppTitle = {
 export const headerItems  = [
     {
         name: "Home",
-        id: "home",
+        href: "/",
     },
     {
         name: "🛒Cart",
-        id: "cart",
+        href: "/cart",
     },
     {
         name: "👤Account",
-        id: "account"
+        href: "/account"
     }
 ]

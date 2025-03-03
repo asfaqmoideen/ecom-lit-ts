@@ -45,6 +45,7 @@ export class HomeContainer extends LitElement{
         :host{ 
         all : initial;
         flex:1;
+        width :100%;
         margin:1rem;
         }
 

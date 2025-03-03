@@ -65,7 +65,7 @@ export class MasterSearch extends LitElement{
    :host { 
     all: initial;
     display: block; 
-    width: 100%;
+    margin: 0 1rem;
 }
 
 .headgrp {

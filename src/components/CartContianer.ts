@@ -16,7 +16,6 @@ export class CartContainer extends LitElement{
         :host{ 
         all : initial;
         flex:1;
-        margin:1rem;
         }
 
     `
