@@ -3,6 +3,7 @@ import { customElement, state, property, } from "lit/decorators.js";
 import { APIService } from "../services/APIService";
 import "./ProductsContainer"
 import "./MasterSearch"
+import { convertToPascalCase } from "../services/helperMethods";
 import Product from "../constants/ProductType";
 
 
@@ -16,6 +17,10 @@ export class HomeContainer extends LitElement{
 
     async connectedCallback() {
         super.connectedCallback();
+        this.setAllProducts();
+    }
+
+    private async setAllProducts(){
         const data = await this.api.getAllProducts();
         this.products  = data.products ;
     }
@@ -24,19 +29,23 @@ export class HomeContainer extends LitElement{
         const query = event.detail.query.toLowerCase();
         const data = await this.api.searchProduct(query);
         this.products = data.products;
-        this.resultTitle = query;
+        this.resultTitle = query ? `${this.products.length} results for "${query}"` : "";
     }
 
     private async handleCategory(event: CustomEvent) {
         const query = event.detail.query;
         const data = await this.api.getProductsByCategory(query);
         this.products = data.products ;
-        this.resultTitle = query;
+        this.resultTitle = query ? `${convertToPascalCase(query)} (${this.products.length})` : "";
     }
     
+    private async handleClearResults() {
+        this.setAllProducts();
+        this.resultTitle = "All Products";
+    }
     render(){
         return html `
-        <ecom-mastersearch .title = ${this.resultTitle ? this.resultTitle : "All Products"} @search-changed=${this.handleSearch} @category-clicked=${this.handleCategory}></ecom-mastersearch>
+        <ecom-mastersearch .title = ${this.resultTitle ? this.resultTitle : "All Products"} @search-changed=${this.handleSearch} @category-clicked=${this.handleCategory} @clear-results=${this.handleClearResults}></ecom-mastersearch>
         <ecom-productscontainer .products=${this.products}></ecom-productscontainer>
         `;
     }

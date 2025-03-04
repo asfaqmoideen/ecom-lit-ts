@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { AppTitle, headerItems } from "../constants/appconstants";
+
 import "./MasterSearch";
 
 
@@ -16,6 +17,7 @@ export class CustomHeader extends LitElement{
     <h2 @click=${this.handleTitleClick}><img src=${AppTitle.logoPath} class="headerimg" alt="Logo" /> ${AppTitle.title}</h2>
     <ecom-headersearch></ecom-headersearch>
     <ul>
+        
         ${headerItems.map(item => (html`<a href=${item.href}>${item.name}</a>`))}
     </ul>
         `;

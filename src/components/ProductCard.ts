@@ -36,7 +36,7 @@ export class ProductCard extends LitElement{
         }
             
         .productCard:hover {
-            transform: scale(1.05);
+            transform: scale(1.01);
         }
         .productCard{
         height: 250px;

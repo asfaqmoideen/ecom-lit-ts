@@ -11,7 +11,7 @@ import './components/AccountContainer';
 export class AppMain extends LitElement {
 
   firstUpdated() {
-    const router = new Router(this.renderRoot?.querySelector('#outlet')!);
+    const router = new Router(this.renderRoot.querySelector('#outlet'));
     router.setRoutes([
       { path: '/', component: 'home-container' },
       { path: '/account', component: 'account-container' },

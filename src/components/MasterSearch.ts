@@ -12,6 +12,7 @@ export class MasterSearch extends LitElement{
     @property({ attribute: true }) title: string = "All Products"
     @state() categories : string[] = [];
     @state() private isModalVisible = false;
+    @state() private isCategorySearchApplied = false;
 
     async connectedCallback(){
         super.connectedCallback();
@@ -27,6 +28,7 @@ export class MasterSearch extends LitElement{
             bubbles: true,
             composed: true
         }));
+        this.isCategorySearchApplied = true;
     }
 
     private handleCategoryClick(event : Event) {
@@ -37,19 +39,30 @@ export class MasterSearch extends LitElement{
             composed : true
         }))
         this.toggleCategoryModal();
+        this.isCategorySearchApplied = true;
     }
 
+    private clearResults(){
+        this.isCategorySearchApplied = !this.isCategorySearchApplied;
+        this.dispatchEvent(new CustomEvent("clear-results",{
+            bubbles: true,
+            composed : true
+        }))
+    }
     private toggleCategoryModal() {
       this.isModalVisible = !this.isModalVisible;
     }
 
-    
+
     render(){
         return html `
             <div class = "headgrp">
-            <h3>${convertToPascalCase(this.title)}</h3>
+            <h3>${this.title}</h3>
             <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
+            <div>
+            ${this.isCategorySearchApplied ? html`<button @click=${this.clearResults}>Clear</button>` : ''}
             <button @click=${this.toggleCategoryModal}>Select Category</button>
+            <div>
             </div>
          ${this.isModalVisible ? html`
             <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
