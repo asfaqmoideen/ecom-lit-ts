@@ -1,8 +1,8 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import './ProductCard';
-import './OverlayModal'
-import { ProductCard } from "./ProductCard";
+import './OverlayModal';
+import { Router } from "@vaadin/router";
 import Product from "../constants/ProductType";
 
 
@@ -23,11 +23,13 @@ export class ProductsContainer extends LitElement{
         this.isProductInfoVisible = !this.isProductInfoVisible;
     }
 
-    private handleProductCardClick(event : Event){
-        const litElement = event.target as ProductCard;
-        this.clickedProduct = litElement.product;
-        this.toogleProductInfo();
-    }
+    private handleProductCardClick(event: Event) {
+        const productCard = event.target as HTMLElement & { product: any };
+        const productId = productCard?.product?.id;
+        if (productId) {
+          Router.go(`/product?id=${productId}`);
+        }
+      }
 
     render(){   
         if (this.isLoading) {

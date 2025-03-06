@@ -6,6 +6,7 @@ import './components/CustomFooter';
 import './components/HomeContainer';
 import './components/CartContianer';
 import './components/AccountContainer';
+import './components/ProductDetailContainer';
 
 @customElement('app-main')
 export class AppMain extends LitElement {
@@ -16,6 +17,7 @@ export class AppMain extends LitElement {
       { path: '/', component: 'home-container' },
       { path: '/account', component: 'account-container' },
       { path: '/cart', component: 'cart-container' },
+      { path: "/product", component: 'product-detail-container' },
     ]);
   }
 

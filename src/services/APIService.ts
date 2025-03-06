@@ -46,4 +46,8 @@ export class APIService{
       async getProductsByCategory(category :string) {
         return await this.tryFetchingData(`${this.baseURL}/category/${category}`)
       }
+
+      async getProductById(productID :number){
+        return await this.tryFetchingData(`${this.baseURL}/${productID}`)
+      }
 }
