@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { customElement, state, property, } from "lit/decorators.js";
+import { customElement, state } from "lit/decorators.js";
 import { APIService } from "../services/APIService";
 import "./ProductsContainer"
 import "./MasterSearch"
