@@ -59,7 +59,7 @@ export class ProductsContainer extends LitElement{
                             </div
                 </overlay-modal>
             `: ''}
-
+            
         `;
     }
 

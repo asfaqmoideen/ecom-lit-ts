@@ -29,7 +29,7 @@ export class HomeContainer extends LitElement{
         const query = event.detail.query.toLowerCase();
         const data = await this.api.searchProduct(query);
         this.products = data.products;
-        this.resultTitle = query ? `${this.products.length} results for "${query}"` : "";
+        this.resultTitle = query ? `${this.products.length} results for '${query}'` : "";
     }
 
     private async handleCategory(event: CustomEvent) {

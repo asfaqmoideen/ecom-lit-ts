@@ -57,10 +57,10 @@ export class MasterSearch extends LitElement{
     render(){
         return html `
             <div class = "headgrp">
-            <h3>${this.title}</h3>
+           
+            <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>🔙</button>` : ''}${this.title}</h3>
             <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
             <div>
-            ${this.isCategorySearchApplied ? html`<button @click=${this.clearResults}>Clear</button>` : ''}
             <button @click=${this.toggleCategoryModal}>Select Category</button>
             <div>
             </div>
@@ -100,10 +100,6 @@ export class MasterSearch extends LitElement{
     transition: border-color 0.3s ease-in-out;
 }
 
-#headersearch:focus {
-    border-color: #3cba92; 
-}
-
 button {
     padding: 0.5rem 1rem; 
     border-radius: 0.7rem;
@@ -136,6 +132,11 @@ button:hover {
     ul :hover {
         transform: scale(1.05);
     }
+
+#back{
+background:none;
+padding:0;
+margin: 0 1rem}
 `;
 }
 

@@ -29,10 +29,9 @@ export class AppMain extends LitElement {
 
   static styles = css`
     :host {
-    all : initial;
+      all : initial;
       height : 100vh;
       width: 100%;
-      text-align: center;
       display: flex;
       flex-direction: column;
     }
