@@ -33,7 +33,8 @@ export class ProductsContainer extends LitElement{
 
     render(){   
         if (this.isLoading) {
-            return html`<h2>Loading Products...</h2>`;
+            return html`<h2>Loading Products...</h2>
+                        `;
         }
 
         if(this.products.length === 0){

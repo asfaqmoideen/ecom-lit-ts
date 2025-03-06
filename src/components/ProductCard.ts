@@ -129,15 +129,14 @@ export class ProductCard extends LitElement {
 
         button {
             width: 100%;
-            display: inline;
             padding: 0.6rem;
             border: none;
             border-radius: 0.4rem;
-            background:rgb(138, 227, 188);
+            background:rgb(5, 201, 116);
             color: white;
             cursor: pointer;
             margin-top: 0.8rem;
-            transition: background 0.2s ease-in-out;
+            transition: background 0.4s ease-in-out;
         }
 
         button:hover {
