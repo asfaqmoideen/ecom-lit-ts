@@ -34,7 +34,6 @@ export class ProductDetailContainer extends LitElement {
         <p>${this.product.description}</p>
         <p><strong>Price:</strong> $${this.product.price}</p>
         <p><strong>Discount:</strong> ${this.product.discountPercentage}%</p>
-        <button @click="${() => history.back()}">Back</button>
       </div>
     `;
   }
@@ -43,7 +42,6 @@ export class ProductDetailContainer extends LitElement {
     .product-detail {
       display: flex;
       flex-direction: column;
-      align-items: center;
       padding: 1rem;
     }
     img {

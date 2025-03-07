@@ -16,7 +16,7 @@ export class ProductsContainer extends LitElement{
 
     connectedCallback() {
       super.connectedCallback();
-      setTimeout(() => {this.isLoading = false; }, 2000);
+      setTimeout(() => {this.isLoading = false; },1000);
     }
 
     private toogleProductInfo(){
@@ -33,8 +33,7 @@ export class ProductsContainer extends LitElement{
 
     render(){   
         if (this.isLoading) {
-            return html`<h2>Loading Products...</h2>
-                        `;
+            return html`<h2>Loading Products...</h2> `;
         }
 
         if(this.products.length === 0){
