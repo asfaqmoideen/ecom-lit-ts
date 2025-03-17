@@ -1,6 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import Product from "../constants/ProductType";
+import { calculateDisPrice } from "../services/helperMethods";
 
 @customElement("ecom-productcard")
 export class ProductCard extends LitElement {
@@ -14,24 +15,20 @@ export class ProductCard extends LitElement {
         return html`
             <div class="productCard">
                 <div class="imagebg">
-                    <div class="discount"><p>- ${this.product.discountPercentage}%</p></div>
+                    <div class="discount"><p>- ${Math.ceil(this.product.discountPercentage)}%</p></div>
                     <div class="rating"><p>⭐ ${this.product.rating}</p></div>
                     <img src=${this.product.thumbnail} class="thumbnail" alt=${this.product.title}>
                 </div>
                 <div class="details">  
                     <h4>${this.product.title}</h4>
                     <p id="detailsp">
-                        $${this.calculateDisPrice(this.product)} 
+                        $${calculateDisPrice(this.product)} 
                         <span id="actualprice">$${this.product.price}</span>
                     </p>
-                    <div @click=${(e:Event)=> e.stopPropagation()}><button @click=${this.addToCart}>Add to Cart</button></div>
+                    <div class="btndiv" @click=${(e:Event)=> e.stopPropagation()}><button @click=${this.addToCart}>Add to Cart</button></div>
                 </div>
             </div>
         `;
-    }
-
-    private calculateDisPrice(product: Product): number {
-        return Number((product.price - (product.price * product.discountPercentage / 100)).toFixed(2));
     }
 
     private addToCart() {
@@ -100,33 +97,35 @@ export class ProductCard extends LitElement {
         }
 
         .details {
-            align-self: start;
             padding: 0.6rem;
-            text-align: center;
             width: 100%;
+            display:flex;
+            align-items:center;
+            flex-direction:column;
         }
 
         .discount, .rating {
             position: absolute;
             padding: 0.3rem 0.6rem;
             font-size: 0.8rem;
-            font-weight: bold;
             border-radius: 0.2rem;
+            top: 10px;
         }
 
         .discount {
             background-color: rgb(250, 57, 57);
-            top: 10px;
             left: 10px;
             color:white;    
         }
 
         .rating {
             background-color: whitesmoke;
-            top: 10px;
             right: 10px;
         }
 
+        .btndiv{
+            width: 100%;
+        }
         button {
             width: 100%;
             padding: 0.6rem;

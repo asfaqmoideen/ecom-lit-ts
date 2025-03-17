@@ -56,13 +56,10 @@ export class MasterSearch extends LitElement{
 
     render(){
         return html `
-            <div class = "headgrp">
-           
-            <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>🔙</button>` : ''}${this.title}</h3>
-            <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
-            <div>
-            <button @click=${this.toggleCategoryModal}>Select Category</button>
-            <div>
+            <div class = "headgrp"> 
+                <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>⬅️</button>` : ''}${this.title}</h3>
+                <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
+                    <button @click=${this.toggleCategoryModal}>Select Category</button>
             </div>
          ${this.isModalVisible ? html`
             <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
