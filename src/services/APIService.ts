@@ -2,9 +2,9 @@ export class APIService{
 
     private baseURL : string = "https://dummyjson.com/products";
     
-      async tryFetchingData(url :string) {
+      async tryFetchingData(endpoint :string){
         try {
-          const response = await fetch(url, { method: "GET" });
+          const response = await fetch(`${this.baseURL}/${endpoint}`, { method: "GET" });
           
           if (!response.ok) {
             throw new Error("Unable to Fetch");
@@ -16,12 +16,12 @@ export class APIService{
       }
     
       async getAllProducts() {
-        return await this.tryFetchingData(`${this.baseURL}`);
+        return await this.tryFetchingData('');
       }
     
       async sortProducts(value :number, order :number) {
         return await this.tryFetchingData(
-          `${this.baseURL}?sortBy=${value}&order=${order}`
+          `?sortBy=${value}&order=${order}`
         );
       }
 
@@ -36,18 +36,20 @@ export class APIService{
       }
     
       async getProducts(limit :number, skip:number){
-        return await this.tryFetchingData(`${this.baseURL}?limit=${limit}&skip=${skip}`)
+        return await this.tryFetchingData(`?limit=${limit}&skip=${skip}`)
       }
 
       async getProductCategories(){
-        return await this.tryFetchingData(`${this.baseURL}/category-list`)
+        return await this.tryFetchingData(`category-list`)
       }
 
       async getProductsByCategory(category :string) {
-        return await this.tryFetchingData(`${this.baseURL}/category/${category}`)
+        return await this.tryFetchingData(`category/${category}`)
       }
 
-      async getProductById(id : number){
-        return await this.tryFetchingData(`${this.baseURL}/product/${id}`)
+      async getProductById(productID :number){
+        return await this.tryFetchingData(`${productID}`)
       }
+
+      
 }
