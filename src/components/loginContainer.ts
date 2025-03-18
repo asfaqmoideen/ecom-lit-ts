@@ -2,63 +2,74 @@ import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js"
 import { AppTitle } from "../constants/appconstants";
 import { AuthenticationController } from "../controllers/AuthenticationController";
+import { Router } from "@vaadin/router";
 
 @customElement("login-container")
 export class LoginContainer extends LitElement {
 
     @state() private isLoginMode: boolean = true;
-    @state() private loginError: string = "";
-    @state() private signupError: string = "";
     
     private auth = new AuthenticationController();
 
     private handleLogin(event: Event) {
         event.preventDefault();
-        const form = event.currentTarget as HTMLFormElement | null;
-
-        if (!form || !(form instanceof HTMLFormElement)) {
-            this.loginError = "Form submission error.";
-            return;
+        try {
+            const form = event.currentTarget as HTMLFormElement | null;
+    
+            if (!form || !(form instanceof HTMLFormElement)) {
+                throw new Error("Invlaid Form Submission");
+            }
+    
+            const formData = new FormData(form);
+            const username = formData.get("username") as string;
+            const password = formData.get("password") as string;
+            
+            this.auth.login({username, password});
+            
+            console.log("Login Form Data:", { username, password });
+        } catch (error) {
+            this.setError("signin-error", (error as Error).message);
         }
-
-        const formData = new FormData(form);
-        const username = formData.get("username") as string;
-        const password = formData.get("password") as string;
-        
-        this.auth.login({username, password});
-        console.log("Login Form Data:", { username, password });
-        this.loginError = "";
     }
 
     private handleSignUp(event: Event) {
         event.preventDefault();
-        const form = event.currentTarget as HTMLFormElement | null;
-
-        if (!form || !(form instanceof HTMLFormElement)) {
-            this.signupError = "Form submission error.";
-            return;
+        try {
+                const form = event.currentTarget as HTMLFormElement | null;
+    
+                if (!form || !(form instanceof HTMLFormElement)) {
+                    throw Error("Invalid Form Submission");
+                }
+    
+                const formData = new FormData(form);
+                const username = formData.get("name") as string;
+                const password = formData.get("npassword") as string;
+                const confirmPassword = formData.get("fpassword") as string;
+    
+                if (password !== confirmPassword) {
+                    throw new Error("Paswwords doesn't match");
+                }
+    
+                console.log("Signup Form Data:", { username, password });
+        } catch (error) {
+            this.setError("signup-error", (error as Error).message);
         }
-
-        const formData = new FormData(form);
-        const username = formData.get("name") as string;
-        const password = formData.get("npassword") as string;
-        const confirmPassword = formData.get("fpassword") as string;
-
-        if (password !== confirmPassword) {
-            this.signupError = "Passwords do not match.";
-            return;
-        }
-
-        console.log("Signup Form Data:", { username, password });
-        this.signupError = "";
     }
 
     private switchMode() {
         this.isLoginMode = !this.isLoginMode;
-        this.loginError = "";
-        this.signupError = "";
     }
 
+    private setError(id: string, message: string) {
+        const errorElement = this.shadowRoot?.getElementById(id);
+        if (!errorElement) {
+            console.log(`Error element with id '${id}' not found`);
+            return;
+        }
+        errorElement.textContent = message;
+        setTimeout(()=>{errorElement.textContent = ""},2000);
+    }
+    
     render() {
         return html`
             <div class="imageDiv">
@@ -83,9 +94,9 @@ export class LoginContainer extends LitElement {
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password" placeholder="Enter password" required>
                     </div>
-                    <p class="error">${this.loginError}</p>
                     <button type="submit" class="btn">Sign In</button>
                     <p>Don't have an account? <span @click=${this.switchMode} class="switch-text">Sign Up</span></p>
+                    <p id="signin-error" class="error"></p>
                 </form>
             </div>`;
     }
@@ -111,9 +122,9 @@ export class LoginContainer extends LitElement {
                         <label for="fpassword">Retype Password</label>
                         <input type="password" name="fpassword" id="fpassword" placeholder="Confirm password" required>
                     </div>
-                    <p class="error">${this.signupError}</p>
                     <button type="submit" class="btn">Register</button>
                     <p>Already have an account? <span @click=${this.switchMode} class="switch-text">Sign In</span></p>
+                    <p id="signup-error" class="error"></p>
                 </form>
             </div>`;
     }
@@ -137,7 +148,6 @@ export class LoginContainer extends LitElement {
             form{
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
                 align-items: center;
                 padding: 2rem;
             }
@@ -152,6 +162,7 @@ export class LoginContainer extends LitElement {
             .form-group{
                 display: flex;
                 flex-direction: column;
+                padding:.5rem;
             }
 
             .login-container{
@@ -201,7 +212,10 @@ export class LoginContainer extends LitElement {
             color: blue;
             font-weight: bold;
             cursor: pointer;
-        }
+            }
+            .error{
+                color:red;
+            }
         `;
 }
 
