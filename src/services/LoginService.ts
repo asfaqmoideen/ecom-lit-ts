@@ -1,5 +1,7 @@
 export class LoginAPIService{
 
+    public expireInMins : number = 30;
+
     async tryLogin(user :User){
        const response =  await fetch('https://dummyjson.com/auth/login', {
             method: 'POST',
@@ -7,35 +9,34 @@ export class LoginAPIService{
             body: JSON.stringify({
               username: user.username,
               password: user.password,
-              expiresInMins: 30, 
+              expiresInMins: this.expireInMins, 
             }),
           })
         
         return response.json();
     }
 
-    tryAuthenticatingUser(){
-        fetch('https://dummyjson.com/auth/me', {
+    async tryAuthenticatingUser(token :string | null){
+       
+        const response = await fetch('https://dummyjson.com/auth/me', {
             method: 'GET',
             headers: {
-            'Authorization': "das" 
+            'Authorization': token ? token : "",
             }, 
         })
-        .then(res => res.json())
-        .then(console.log);
+        return response.json();
     }
 
-    tryRefreshingUserToke(){
-        fetch('https://dummyjson.com/auth/refresh', {
+    async tryRefreshingUserToke(refreshToken :string | null){
+        const response = await fetch('https://dummyjson.com/auth/refresh', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              refreshToken: '/* YOUR_REFRESH_TOKEN_HERE */', 
-              expiresInMins: 30,
+              refreshToken: refreshToken ? refreshToken : "", 
+              expiresInMins: this.expireInMins,
             })
           })
-          .then(res => res.json())
-          .then(console.log);
+          return response.json();
     }
 
 }

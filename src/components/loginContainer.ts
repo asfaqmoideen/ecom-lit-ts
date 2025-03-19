@@ -26,6 +26,8 @@ export class LoginContainer extends LitElement {
             
             this.auth.login({username, password});
             
+            
+            history.back();
             console.log("Login Form Data:", { username, password });
         } catch (error) {
             this.setError("signin-error", (error as Error).message);
@@ -38,7 +40,7 @@ export class LoginContainer extends LitElement {
                 const form = event.currentTarget as HTMLFormElement | null;
     
                 if (!form || !(form instanceof HTMLFormElement)) {
-                    throw Error("Invalid Form Submission");
+                    throw new Error("Invalid Form Submission");
                 }
     
                 const formData = new FormData(form);
@@ -51,7 +53,8 @@ export class LoginContainer extends LitElement {
                 }
     
                 console.log("Signup Form Data:", { username, password });
-        } catch (error) {
+                // this.switchMode();
+        } catch (error ) {
             this.setError("signup-error", (error as Error).message);
         }
     }
