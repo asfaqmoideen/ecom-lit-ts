@@ -16,6 +16,8 @@ export class HomeContainer extends LitElement{
     @state() data : Data | null = null;
     @state() private resultTitle : string = "All Products";
     @state() private isLoading : boolean = false;
+    @state() startProduct :number = 1;
+    @state() endProduct :number = 20;
     
 
     async connectedCallback() {
@@ -51,7 +53,10 @@ export class HomeContainer extends LitElement{
     }
 
     private handlePageChange(event: CustomEvent) {
-        console.log("event", event.detail);
+        this.startProduct = event.detail.skip;
+        this.endProduct = event.detail.limit * event.detail.page;
+        console.log(this.startProduct, this.endProduct);
+        
     }
     render(){
         return html `
@@ -62,7 +67,7 @@ export class HomeContainer extends LitElement{
         </ecom-mastersearch>
         <div class="content">
             ${this.isLoading ? html`<custom-loader></custom-loader>` : html` 
-            <ecom-productscontainer .products=${this.data?.products}></ecom-productscontainer>
+            <ecom-productscontainer .products=${this.data?.products.slice(this.startProduct, this.endProduct)}></ecom-productscontainer>
             <pagination-container @page-change=${this.handlePageChange} .total=${this.data?.total}></pagination-container>`} 
         </div>
         `;
@@ -90,8 +95,4 @@ export class HomeContainer extends LitElement{
         limit : number,
         total: number,
         products : Product[],
-        skip:number;
-    }
-
-
-
+    }   

@@ -20,6 +20,7 @@ export class PaginationContainer extends LitElement {
             detail: {
                 limit : this.itemsPerPage,
                 skip: this.itemsPerPage*(this.page-1),
+                page: this.page,
             },
             bubbles: true,
             composed: true,
