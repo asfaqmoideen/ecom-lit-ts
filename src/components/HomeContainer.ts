@@ -4,6 +4,7 @@ import { APIService } from "../services/APIService";
 import "./ProductsContainer"
 import "./MasterSearch"
 import "./CustomLoader"
+import "./PaginationContainer"
 import { convertToPascalCase } from "../services/helperMethods";
 import Product from "../constants/ProductType";
 
@@ -12,9 +13,11 @@ import Product from "../constants/ProductType";
 export class HomeContainer extends LitElement{
 
     private api = new APIService();
-    @state() private products : Product[] = [];
+    @state() data : Data | null = null;
     @state() private resultTitle : string = "All Products";
     @state() private isLoading : boolean = false;
+    @state() startProduct :number = 1;
+    @state() endProduct :number = 20;
     
 
     async connectedCallback() {
@@ -24,32 +27,36 @@ export class HomeContainer extends LitElement{
 
     private async setAllProducts(){
         this.isLoading = true;
-        const data = await this.api.getAllProducts();
-        this.products  = data.products ;
+        this.data = await this.api.getAllProducts();
         this.isLoading = false;
     }
 
     private async handleSearch(event: CustomEvent) {
         const query = event.detail.query.toLowerCase();
         this.isLoading = true;
-        const data = await this.api.searchProduct(query);
-        this.products = data.products;
+        this.data = await this.api.searchProduct(query);
         this.isLoading = false;
-        this.resultTitle = query ? `${this.products.length} results for '${query}'` : "";
+        this.resultTitle = query ? `${this.data?.total} results for '${query}'` : "";
     }
 
     private async handleCategory(event: CustomEvent) {
         const query = event.detail.query;
         this.isLoading = true;
-        const data = await this.api.getProductsByCategory(query);
-        this.products = data.products ;
+        this.data = await this.api.getProductsByCategory(query);
         this.isLoading = false ;
-        this.resultTitle = query ? `${convertToPascalCase(query)} (${this.products.length})` : "";
+        this.resultTitle = query ? `${convertToPascalCase(query)} (${this.data?.total})` : "";
     }
     
     private async handleClearResults() {
         this.setAllProducts();
         this.resultTitle = "All Products";
+    }
+
+    private handlePageChange(event: CustomEvent) {
+        this.startProduct = event.detail.skip;
+        this.endProduct = event.detail.limit * event.detail.page;
+        console.log(this.startProduct, this.endProduct);
+        
     }
     render(){
         return html `
@@ -60,7 +67,8 @@ export class HomeContainer extends LitElement{
         </ecom-mastersearch>
         <div class="content">
             ${this.isLoading ? html`<custom-loader></custom-loader>` : html` 
-            <ecom-productscontainer .products=${this.products}></ecom-productscontainer>`} 
+            <ecom-productscontainer .products=${this.data?.products.slice(this.startProduct, this.endProduct)}></ecom-productscontainer>
+            <pagination-container @page-change=${this.handlePageChange} .total=${this.data?.total}></pagination-container>`} 
         </div>
         `;
     }
@@ -77,10 +85,14 @@ export class HomeContainer extends LitElement{
             height:100%;
             align-items:center;
             justify-content:center;
+            flex-direction:column;
         }
 
     `
 }
 
-
-
+    type Data = {
+        limit : number,
+        total: number,
+        products : Product[],
+    }   
