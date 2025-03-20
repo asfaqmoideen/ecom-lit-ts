@@ -16,12 +16,12 @@ export class APIService{
     }
   
     async getAllProducts() {
-      return await this.tryFetchingData('');
+      return await this.tryFetchingData('?limit=0');
     }
   
   
     async searchProduct(productname :string) {
-      return this.tryFetchingData(`search?q=${productname}`);
+      return this.tryFetchingData(`search?q=${productname}&limit=0`);
     }
   
     async getProducts(limit :number, skip:number){
@@ -33,7 +33,7 @@ export class APIService{
     }
 
     async getProductsByCategory(category :string) {
-      return await this.tryFetchingData(`category/${category}`)
+      return await this.tryFetchingData(`category/${category}?limit=0`)
     }
 
     async getProductById(productID :number){
