@@ -1,7 +1,7 @@
 import { LitElement, html, css } from "lit";
 import { customElement, state } from "lit/decorators.js";
 import { APIService } from "../services/APIService";
-import Product from "../constants/ProductType";
+import {Product} from "../constants/GlobalTypes";
 import './CustomLoader';
 import { convertToPascalCase, calculateDisPrice } from "../services/helperMethods";
 

@@ -6,14 +6,14 @@ import "./MasterSearch"
 import "./CustomLoader"
 import "./PaginationContainer"
 import { convertToPascalCase } from "../services/helperMethods";
-import Product from "../constants/ProductType";
+import {ResponseData} from "../constants/GlobalTypes";
 
 
 @customElement("home-container")
 export class HomeContainer extends LitElement{
 
     private api = new APIService();
-    @state() data : Data | null = null;
+    @state() data : ResponseData | null = null;
     @state() private resultTitle : string = "All Products";
     @state() private isLoading : boolean = false;
     @state() startProduct :number = 1;
@@ -91,8 +91,3 @@ export class HomeContainer extends LitElement{
     `
 }
 
-    type Data = {
-        limit : number,
-        total: number,
-        products : Product[],
-    }   

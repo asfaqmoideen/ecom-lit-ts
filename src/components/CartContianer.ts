@@ -1,14 +1,25 @@
 import { LitElement, html, css } from "lit";
-import { customElement} from "lit/decorators.js";
-
+import { customElement, property} from "lit/decorators.js";
+import { consume } from "@lit/context";
+import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
+import { Product } from "../constants/GlobalTypes";
 
 
 @customElement("cart-container")
 export class CartContainer extends LitElement{
     
+    @consume({context: cartContext}) Cart : {items: Product[]} = {items: []};
+    @consume({context: loggedInContext}) LoggedIn? :boolean;
+
+   
+
     render(){
         return html `
-            <h1> Carts </h1>
+            ${this.LoggedIn ? html`
+                <h1> Carts </h1>
+            `
+            : html`<login-container></login-container>`
+            }
         `;
     }
 

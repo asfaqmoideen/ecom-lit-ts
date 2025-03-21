@@ -1,7 +1,8 @@
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import Product from "../constants/ProductType";
+import {Product} from "../constants/GlobalTypes";
 import { calculateDisPrice } from "../services/helperMethods";
+import './AddToCart'
 
 @customElement("ecom-productcard")
 export class ProductCard extends LitElement {
@@ -25,19 +26,10 @@ export class ProductCard extends LitElement {
                         $${calculateDisPrice(this.product)} 
                         <span id="actualprice">$${this.product.price}</span>
                     </p>
-                    <div class="btndiv" @click=${(e:Event)=> e.stopPropagation()}><button @click=${this.addToCart}>Add to Cart</button></div>
+                    <div class="btndiv" @click=${(e:Event)=> e.stopPropagation()}><ecom-addtocart .product=${this.product}></ecom-addtocart></div>
                 </div>
             </div>
         `;
-    }
-
-    private addToCart() {
-        console.log(`Added to cart: ${this.product?.title}`);
-        this.dispatchEvent(new CustomEvent("add-to-cart", {
-            detail: this.product,
-            bubbles: true,
-            composed: true
-        }));
     }
 
     static styles = css`
@@ -126,20 +118,6 @@ export class ProductCard extends LitElement {
         .btndiv{
             width: 100%;
         }
-        button {
-            width: 100%;
-            padding: 0.6rem;
-            border: none;
-            border-radius: 0.4rem;
-            background:rgb(5, 201, 116);
-            color: white;
-            cursor: pointer;
-            margin-top: 0.8rem;
-            transition: background 0.4s ease-in-out;
-        }
 
-        button:hover {
-            background:rgb(80, 174, 133);
-        }
     `;
 }

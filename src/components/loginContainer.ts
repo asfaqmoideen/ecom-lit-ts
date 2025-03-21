@@ -1,137 +1,129 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js"
+import { customElement, state } from "lit/decorators.js"
 import { AppTitle } from "../constants/appconstants";
 import { AuthenticationController } from "../controllers/AuthenticationController";
-import { Router } from "@vaadin/router";
+import { consume } from "@lit/context";
+import { loggedInContext } from "../contexts/GlobalContexts";
 
 @customElement("login-container")
 export class LoginContainer extends LitElement {
+  @state() private isLoginMode = true;
+  @consume({ context: loggedInContext }) loggedIn?: boolean;
 
-    @state() private isLoginMode: boolean = true;
-    
-    private auth = new AuthenticationController();
+  private auth = new AuthenticationController();
 
-    private handleLogin(event: Event) {
-        event.preventDefault();
-        try {
-            const form = event.currentTarget as HTMLFormElement | null;
-    
-            if (!form || !(form instanceof HTMLFormElement)) {
-                throw new Error("Invlaid Form Submission");
-            }
-    
-            const formData = new FormData(form);
-            const username = formData.get("username") as string;
-            const password = formData.get("password") as string;
-            
-            this.auth.login({username, password});
-            
-            
-            history.back();
-            console.log("Login Form Data:", { username, password });
-        } catch (error) {
-            this.setError("signin-error", (error as Error).message);
-        }
+  private async handleLogin(event: Event) {
+    event.preventDefault();
+    try {
+      const form = event.currentTarget as HTMLFormElement;
+      if (!form) throw new Error("Invalid Form Submission");
+
+      const formData = new FormData(form);
+      const username = formData.get("username") as string;
+      const password = formData.get("password") as string;
+
+      this.auth.login({ username, password });
+      const user = await this.auth.authenticate();
+      this.dispatchEvent(new CustomEvent('update-login', {
+        detail: { status: true, user },
+        bubbles: true,
+        composed: true
+      }));
+
+      history.back();
+    } catch (error) {
+      this.setError("signin-error", (error as Error).message);
     }
+  }
 
-    private handleSignUp(event: Event) {
-        event.preventDefault();
-        try {
-                const form = event.currentTarget as HTMLFormElement | null;
-    
-                if (!form || !(form instanceof HTMLFormElement)) {
-                    throw new Error("Invalid Form Submission");
-                }
-    
-                const formData = new FormData(form);
-                const username = formData.get("name") as string;
-                const password = formData.get("npassword") as string;
-                const confirmPassword = formData.get("fpassword") as string;
-    
-                if (password !== confirmPassword) {
-                    throw new Error("Paswwords doesn't match");
-                }
-    
-                console.log("Signup Form Data:", { username, password });
-                // this.switchMode();
-        } catch (error ) {
-            this.setError("signup-error", (error as Error).message);
-        }
-    }
+  private handleSignUp(event: Event) {
+    event.preventDefault();
+    try {
+      const form = event.currentTarget as HTMLFormElement;
+      if (!form) throw new Error("Invalid Form Submission");
 
-    private switchMode() {
-        this.isLoginMode = !this.isLoginMode;
-    }
+      const formData = new FormData(form);
+      const username = formData.get("name") as string;
+      const password = formData.get("npassword") as string;
+      const confirmPassword = formData.get("fpassword") as string;
 
-    private setError(id: string, message: string) {
-        const errorElement = this.shadowRoot?.getElementById(id);
-        if (!errorElement) {
-            console.log(`Error element with id '${id}' not found`);
-            return;
-        }
-        errorElement.textContent = message;
-        setTimeout(()=>{errorElement.textContent = ""},2000);
+      if (password !== confirmPassword) throw new Error("Passwords do not match");
+    } catch (error) {
+      this.setError("signup-error", (error as Error).message);
     }
-    
-    render() {
-        return html`
-            <div class="imageDiv">
-                <img src=${AppTitle.logoPath} alt="Company Logo" class="mainlogo" />
-                <h2>${AppTitle.title}</h2>
-            </div>
+  }
 
-            ${this.isLoginMode ? this.renderLoginForm() : this.renderSignupForm()}
-        `;
-    }
+  private switchMode() {
+    this.isLoginMode = !this.isLoginMode;
+  }
 
-    private renderLoginForm() {
-        return html`
-            <div class="login-container">
-                <form id="login-form" @submit=${this.handleLogin}>
-                    <h3>Sign In</h3>
-                    <div class="form-group">
-                        <label for="username">User Name</label>
-                        <input type="text" name="username" id="username" placeholder="Enter username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Enter password" required>
-                    </div>
-                    <button type="submit" class="btn">Sign In</button>
-                    <p>Don't have an account? <span @click=${this.switchMode} class="switch-text">Sign Up</span></p>
-                    <p id="signin-error" class="error"></p>
-                </form>
-            </div>`;
-    }
+  private setError(id: string, message: string) {
+    const errorElement = this.shadowRoot?.getElementById(id);
+    if (errorElement) errorElement.textContent = message;
+    setTimeout(() => { if (errorElement) errorElement.textContent = ""; }, 2000);
+  }
 
-    private renderSignupForm() {
-        return html`
-            <div class="login-container">
-                <form id="signup-form" @submit=${this.handleSignUp}>
-                    <h3>Register</h3>
-                    <div class="form-group">
-                        <label for="name">User Name</label>
-                        <input type="text" name="name" id="name" placeholder="Enter your name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">E-mail</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="npassword">Password</label>
-                        <input type="password" name="npassword" id="npassword" placeholder="Create a password" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fpassword">Retype Password</label>
-                        <input type="password" name="fpassword" id="fpassword" placeholder="Confirm password" required>
-                    </div>
-                    <button type="submit" class="btn">Register</button>
-                    <p>Already have an account? <span @click=${this.switchMode} class="switch-text">Sign In</span></p>
-                    <p id="signup-error" class="error"></p>
-                </form>
-            </div>`;
-    }
-    static styles = 
+  render() {
+    return html`
+      <div class="imageDiv">
+        <img src=${AppTitle.logoPath} alt="Company Logo" class="mainlogo" />
+        <h2>${AppTitle.title}</h2>
+      </div>
+      ${this.isLoginMode ? this.renderLoginForm() : this.renderSignupForm()}
+    `;
+  }
+
+  private renderLoginForm() {
+    return html`
+      <div class="login-container">
+        <form id="login-form" @submit=${this.handleLogin}>
+          <h3>Sign In</h3>
+          <div class="form-group">
+            <label for="username">User Name</label>
+            <input type="text" name="username" id="username" required>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required>
+          </div>
+          <button type="submit">Sign In</button>
+          <p>Don't have an account? <span @click=${this.switchMode}>Sign Up</span></p>
+          <p id="signin-error" class="error"></p>
+        </form>
+      </div>
+    `;
+  }
+
+  private renderSignupForm() {
+    return html`
+      <div class="login-container">
+        <form id="signup-form" @submit=${this.handleSignUp}>
+          <h3>Register</h3>
+          <div class="form-group">
+            <label for="name">User Name</label>
+            <input type="text" name="name" id="name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" name="email" id="email" required>
+          </div>
+          <div class="form-group">
+            <label for="npassword">Password</label>
+            <input type="password" name="npassword" id="npassword" required>
+          </div>
+          <div class="form-group">
+            <label for="fpassword">Retype Password</label>
+            <input type="password" name="fpassword" id="fpassword" required>
+          </div>
+          <button type="submit">Register</button>
+          <p>Already have an account? <span @click=${this.switchMode}>Sign In</span></p>
+          <p id="signup-error" class="error"></p>
+        </form>
+      </div>
+    `;
+  }
+
+  static styles = 
         css`
             :host {
                 all:initial;
@@ -219,11 +211,6 @@ export class LoginContainer extends LitElement {
             .error{
                 color:red;
             }
-        `;
-}
-
-declare global {
-    interface HTMLElementTagNameMap {
-        "loginContainer": LoginContainer;
-    }
+            `
+        ;
 }

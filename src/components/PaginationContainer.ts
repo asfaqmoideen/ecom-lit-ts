@@ -64,11 +64,6 @@ export class PaginationContainer extends LitElement {
         `;
     }
 
-    protected updated(): void {
-        console.log(this.numberOfPages);
-        console.log(this.total);
-        
-    }
     static styles = [
         css`
             :host {

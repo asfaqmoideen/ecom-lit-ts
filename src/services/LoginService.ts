@@ -1,8 +1,10 @@
+import { UserCredentials } from "../constants/GlobalTypes";
+
 export class LoginAPIService{
 
     public expireInMins : number = 30;
 
-    async tryLogin(user :User){
+    async tryLogin(user :UserCredentials){
        const response =  await fetch('https://dummyjson.com/auth/login', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -27,7 +29,7 @@ export class LoginAPIService{
         return response.json();
     }
 
-    async tryRefreshingUserToke(refreshToken :string | null){
+    async tryRefreshingUserToken(refreshToken :string | null){
         const response = await fetch('https://dummyjson.com/auth/refresh', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -39,9 +41,4 @@ export class LoginAPIService{
           return response.json();
     }
 
-}
-
-type User = {
-    username:string,
-    password:string,
 }

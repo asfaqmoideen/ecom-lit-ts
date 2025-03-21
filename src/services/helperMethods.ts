@@ -1,4 +1,4 @@
-import Product from "../constants/ProductType";
+import {Product} from "../constants/GlobalTypes";
 
 export function convertToPascalCase(...words: string[]): string {
         return words

@@ -1,16 +1,22 @@
 import { LitElement, html, css } from "lit";
-import { customElement, state, property, } from "lit/decorators.js";
-
-
+import { customElement} from "lit/decorators.js";
+import { consume } from "@lit/context";
+import { loggedInContext, userContext } from "../contexts/GlobalContexts";
+import { User } from "../constants/GlobalTypes";
+import './loginContainer';
 
 
 @customElement("account-container")
 export class AccountContainer extends LitElement{
 
-    
+    @consume({context: loggedInContext}) loggedIn? : boolean;
+    @consume({context: userContext}) user? : User;
     render(){
         return html `
-        <h1> Account </h1>
+        ${this.loggedIn ? 
+        html`<h1> ${this.user?.firstName} </h1>`:  
+        html`<login-container></login-container>`
+        }
        `
     }
 
@@ -18,7 +24,7 @@ export class AccountContainer extends LitElement{
         :host{ 
         all : initial;
         flex:1;
-        margin:1rem;
+        padding:1rem;
         }
 
     `
