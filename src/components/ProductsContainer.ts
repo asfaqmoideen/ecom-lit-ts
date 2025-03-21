@@ -1,10 +1,10 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js";
+import { customElement, property } from "lit/decorators.js";
 import './ProductCard';
 import './OverlayModal';
 import './CustomLoader';
 import { Router } from "@vaadin/router";
-import Product from "../constants/ProductType";
+import {Product} from "../constants/GlobalTypes";
 
 
 @customElement("ecom-productscontainer")

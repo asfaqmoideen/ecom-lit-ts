@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lit/context": "^1.1.4",
     "@vaadin/router": "^2.0.0",
     "lit": "^3.2.1",
     "lit-fontawesome": "^0.1.3"

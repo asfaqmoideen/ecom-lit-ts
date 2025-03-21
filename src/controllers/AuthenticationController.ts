@@ -1,6 +1,6 @@
 import { LoginAPIService } from "../services/LoginService";
+import { UserCredentials } from "../constants/GlobalTypes";
 export class AuthenticationController{
-
 
     private loginService: LoginAPIService;
 
@@ -9,21 +9,53 @@ export class AuthenticationController{
     constructor(){
         this.loginService = new LoginAPIService();
     }
-    public async login(user :User){
+
+    
+    public async login(user :UserCredentials){
         try{
             const reponse = await this.loginService.tryLogin(user);
-            sessionStorage.setItem("token", reponse.accessToken);
             console.log("", reponse);
+            sessionStorage.setItem("token", reponse.accessToken);
+            sessionStorage.setItem("refreshToken", reponse.refreshToken);
             this.loginSuccessfull = true;
+            return this.loginSuccessfull;
         }
         catch(e){
-            
+            throw e;
         }
     }
-}
 
+    public async authenticate(){
+        try{
+            const response = await this.loginService.tryAuthenticatingUser(sessionStorage.getItem("token"));
+            this.scheduleTokenRefresh();
+            return response;
+        }
+        catch(e){
+            throw e;
+        }
+    }
 
-type User = {
-    username:string;
-    password:string;
+    public async scheduleTokenRefresh() {
+        setTimeout(async () => {
+            document.addEventListener("visibilitychange", async () => {
+                if (document.visibilityState === "visible") {
+                    console.log("Tab is active, trying to refresh token");
+                    await this.tokenRefresh(); 
+                } else {
+                    console.log("Tab is inactive, logged out");
+                }
+            });
+        }, (this.loginService.expireInMins-1) * 60000);
+    }
+
+    public async tokenRefresh(){
+        try{
+            const response = await this.loginService.tryRefreshingUserToken(sessionStorage.getItem("refreshToken"));
+            console.log(response);
+        }
+        catch(e){
+            throw e;
+        }
+    }
 }
