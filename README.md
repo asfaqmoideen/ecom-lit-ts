@@ -4,22 +4,12 @@ A lightweight and fast e-commerce web app built using  **Lit** ,  **TypeScript**
 
 ## 🚀 Features
 
-<<<<<<< HEAD
 * 🎨 **Component-Based** – Lit ensures reusable and efficient web components.
-* 📱* **Responsive UI** – Fully adaptable to different screen sizes.
-* 🔐* **Authentication** – Basic user authentication (optional).
+* 🔐* **Authentication** – Basic user authentication.
 * 🛍️ **Product Management** – Display, filter, and search products.
 * 🛒 * **Cart & Checkout** – Add products to the cart and proceed to checkout.
 
-**on development queue*
-=======
-* ⚡ **Lightning Fast** – Uses Vite for instant builds and hot module replacement.
-* 🎨 **Component-Based** – Lit ensures reusable and efficient web components.
-* 📱 **Responsive UI** – Fully adaptable to different screen sizes.
-* 🔐 **Authentication** – Basic user authentication (optional).
-* 🛍️ **Product Management** – Display, filter, and search products.
-* 🛒 **Cart & Checkout** – Add products to the cart and proceed to checkout.
->>>>>>> build-RoutingLitComponents
+  **on development queue*
 
 ## 🛠 Installation
 
