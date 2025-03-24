@@ -55,7 +55,6 @@ export class HomeContainer extends LitElement{
     private handlePageChange(event: CustomEvent) {
         this.startProduct = event.detail.skip;
         this.endProduct = event.detail.limit * event.detail.page;
-        console.log(this.startProduct, this.endProduct);
         
     }
     render(){

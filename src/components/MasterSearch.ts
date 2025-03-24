@@ -11,7 +11,8 @@ export class MasterSearch extends LitElement{
 
     @property({ attribute: true }) title: string = "All Products"
     @state() categories : string[] = [];
-    @state() private isModalVisible = false;
+    @state() private isCategoryModalVisible = false;
+    @state() private isSortModalVisible = false;
     @state() private isCategorySearchApplied = false;
 
     async connectedCallback(){
@@ -42,6 +43,17 @@ export class MasterSearch extends LitElement{
         this.isCategorySearchApplied = true;
     }
 
+    private handleFilterClick(event : Event) {
+        const listElement = event.target as HTMLElement;
+        this.dispatchEvent(new CustomEvent("filter-clicked",{
+            detail: { query : "x" },
+            bubbles: true,
+            composed : true
+        }))
+        this.toggleCategoryModal();
+        this.isCategorySearchApplied = true;
+    }
+
     private clearResults(){
         this.isCategorySearchApplied = !this.isCategorySearchApplied;
         this.dispatchEvent(new CustomEvent("clear-results",{
@@ -50,7 +62,10 @@ export class MasterSearch extends LitElement{
         }))
     }
     private toggleCategoryModal() {
-      this.isModalVisible = !this.isModalVisible;
+      this.isCategoryModalVisible = !this.isCategoryModalVisible;
+    }
+    private toggleSortModal() {
+      this.isSortModalVisible = !this.isSortModalVisible;
     }
 
 
@@ -59,14 +74,22 @@ export class MasterSearch extends LitElement{
             <div class = "headgrp"> 
                 <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>⬅️</button>` : ''}${this.title}</h3>
                 <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
+                <div class = "optionsDiv">
                     <button @click=${this.toggleCategoryModal}>Select Category</button>
+                    <button @click=${this.toggleSortModal}>Sort</button>
+                </div>
             </div>
-         ${this.isModalVisible ? html`
-            <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
-                <ul>
-                    ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
-                </ul>
-            </overlay-modal>
+                ${this.isCategoryModalVisible ? html`
+                    <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
+                        <ul>
+                            ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
+                        </ul>
+                    </overlay-modal>
+                `: ''}
+                ${this.isSortModalVisible ? html`
+                    <overlay-modal @close-clicked=${this.toggleSortModal} modalTitle = "Select Sort">
+                            
+                    </overlay-modal>
           `: ''}
         `;
     }

@@ -11,7 +11,7 @@ export class LoginContainer extends LitElement {
   @consume({ context: loggedInContext }) loggedIn?: boolean;
 
   private auth = new AuthenticationController();
-
+  
   private async handleLogin(event: Event) {
     event.preventDefault();
     try {
