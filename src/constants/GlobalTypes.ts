@@ -130,3 +130,4 @@ export type User = {
   crypto: Crypto;
   role: UserRole;
 };
+

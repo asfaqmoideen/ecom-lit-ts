@@ -18,6 +18,7 @@ export class HomeContainer extends LitElement{
     @state() private isLoading : boolean = false;
     @state() startProduct :number = 1;
     @state() endProduct :number = 20;
+    @state() sortOrder : 'asc' | 'desc' = 'asc'
     
 
     async connectedCallback() {
@@ -54,15 +55,26 @@ export class HomeContainer extends LitElement{
 
     private handlePageChange(event: CustomEvent) {
         this.startProduct = event.detail.skip;
-        this.endProduct = event.detail.limit * event.detail.page;
-        
+        this.endProduct = event.detail.limit * event.detail.page; 
     }
+
+    private async handleSortChange(event :CustomEvent) {
+        const sortType = event.detail.sortType;
+        this.isLoading = true;
+        this.sortOrder = event.detail.orderBy;
+        console.log(this.sortOrder, sortType); 
+        this.data = await this.api.getSortedProducts(sortType,this.sortOrder);
+        this.isLoading = false ;
+        this.resultTitle = sortType ? `Sorted by ${convertToPascalCase(sortType)} in ${this.sortOrder} Order (${this.data?.total})` : "";
+    }
+
     render(){
         return html `
         <ecom-mastersearch .title = ${this.resultTitle ? this.resultTitle : "All Products"} 
             @search-changed=${this.handleSearch} 
             @category-clicked=${this.handleCategory} 
-            @clear-results=${this.handleClearResults}>
+            @clear-results=${this.handleClearResults}
+            @sort-change=${this.handleSortChange}>
         </ecom-mastersearch>
         <div class="content">
             ${this.isLoading ? html`<custom-loader></custom-loader>` : html` 

@@ -42,7 +42,7 @@ export class AddtoCart extends LitElement {
     }
     render() {
         return html`
-            ${this.isAlreadyInTheCart() || this.quantity >0?
+            ${  this.quantity >0?
                 html`
                 <div class="quantityChange">
                     <button id="-"  @click=${this.handleQuantityChange} class="quantity">-</button>

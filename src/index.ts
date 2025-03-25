@@ -41,9 +41,10 @@ export class AppMain extends LitElement {
     
     console.log("reviewing logggen In detials");
     const user = await this.auth.authenticate();
+    
     if(user) {
       this.loggedIn = true;
-      this.user = user;
+      this.user = user.user;
       console.log("User already loggen In !");
       
     }
