@@ -40,5 +40,7 @@ export class APIService{
       return await this.tryFetchingData(`${productID}`)
     }
 
-    
+    async getSortedProducts(type:string, orderby:string){
+      return await this.tryFetchingData(`?sortBy=${type}&order=${orderby}`)
+    } 
 }

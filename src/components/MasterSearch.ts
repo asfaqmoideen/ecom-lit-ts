@@ -3,6 +3,7 @@ import { customElement, property, state } from "lit/decorators.js";
 import { convertToPascalCase } from "../services/helperMethods";
 import "./ProductsContainer"
 import { APIService } from "../services/APIService";
+import { sortableFields } from "../constants/appconstants";
 
 @customElement("ecom-mastersearch")
 export class MasterSearch extends LitElement{
@@ -11,7 +12,8 @@ export class MasterSearch extends LitElement{
 
     @property({ attribute: true }) title: string = "All Products"
     @state() categories : string[] = [];
-    @state() private isModalVisible = false;
+    @state() private isCategoryModalVisible = false;
+    @state() private isSortModalVisible = false;
     @state() private isCategorySearchApplied = false;
 
     async connectedCallback(){
@@ -49,24 +51,62 @@ export class MasterSearch extends LitElement{
             composed : true
         }))
     }
+
+
     private toggleCategoryModal() {
-      this.isModalVisible = !this.isModalVisible;
+      this.isCategoryModalVisible = !this.isCategoryModalVisible;
+    }
+    private toggleSortModal() {
+      this.isSortModalVisible = !this.isSortModalVisible;
     }
 
+    private handleSort() {
+        const sortType = this.shadowRoot?.getElementById("sort-by") as HTMLSelectElement;
+        const orderBy = this.shadowRoot?.getElementById("sort-order") as HTMLSelectElement; 
+        this.dispatchEvent(new CustomEvent("sort-change",{
+            detail: { 
+                sortType : sortType.value,
+                orderBy : orderBy.value
+             },
+            bubbles: true,
+            composed : true
+        }))
+        this.isCategorySearchApplied = true;
+        this.toggleSortModal();
+    }
 
     render(){
         return html `
             <div class = "headgrp"> 
                 <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>⬅️</button>` : ''}${this.title}</h3>
                 <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
+                <div class = "optionsDiv">
                     <button @click=${this.toggleCategoryModal}>Select Category</button>
+                    <button @click=${this.toggleSortModal}>Sort</button>
+                </div>
             </div>
-         ${this.isModalVisible ? html`
-            <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
-                <ul>
-                    ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
-                </ul>
-            </overlay-modal>
+                ${this.isCategoryModalVisible ? html`
+                    <overlay-modal @close-clicked=${this.toggleCategoryModal} modalTitle = "Categories">
+                        <ul>
+                            ${this.categories.map(c => html`<li id=${c} @click=${this.handleCategoryClick}>${convertToPascalCase(c)}</li>`)}
+                        </ul>
+                    </overlay-modal>
+                `: ''}
+                ${this.isSortModalVisible ? html`
+                    <overlay-modal @close-clicked=${this.toggleSortModal} modalTitle = "Select Sort">
+                            <div class="sortingDiv">
+                                <label for="sort-order">Order</label>
+                                <select name="sortorder" id="sort-order">
+                                    <option value="asc">Ascending</option>
+                                    <option value="desc">Descending</option>
+                                </select>
+                                <label for="sort-by">Sort By </label>
+                                <select name="sortby" id="sort-by" >
+                                    ${sortableFields.map(sf => html` <option value="${sf}">${convertToPascalCase(sf)}</option>`)}
+                                </select>
+                                <button @click=${this.handleSort}>Show results</button>
+                            </div>
+                    </overlay-modal>
           `: ''}
         `;
     }
@@ -76,40 +116,41 @@ export class MasterSearch extends LitElement{
     all: initial;
     display: block; 
     margin: 0 1rem;
-}
+    }
 
-.headgrp {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
-    gap: 1rem; 
-}
+    .headgrp {
+        display: flex;
+        align-items: center; 
+        justify-content: space-between;
+        gap: 1rem; 
+    }
 
-#headersearch {
-    width: 100%; 
-    max-width: 400px;
-    border-radius: 1rem;
-    text-align: center;
-    border: 1px solid green;
-    padding: 0.5rem; 
-    font-size: 1rem;
-    outline: none; 
-    transition: border-color 0.3s ease-in-out;
-}
+    #headersearch {
+        width: 100%; 
+        max-width: 400px;
+        border-radius: 1rem;
+        text-align: center;
+        border: 1px solid green;
+        padding: 0.5rem; 
+        font-size: 1rem;
+        outline: none; 
+        transition: border-color 0.3s ease-in-out;
+    }
 
-button {
-    padding: 0.5rem 1rem; 
-    border-radius: 0.7rem;
-    border: none;
-    background-image: linear-gradient(to right, rgb(138, 227, 188) 0%, #3cba92 100%);
-    cursor: pointer;
-    transition: background 0.3s ease-in-out, transform 0.2s;
-}
+    button, select {
+        
+        padding: 0.5rem 1rem; 
+        border-radius: 0.7rem;
+        border: none;
+        background-image: linear-gradient(to right, rgb(138, 227, 188) 0%, #3cba92 100%);
+        cursor: pointer;
+        transition: background 0.3s ease-in-out, transform 0.2s;
+    }
 
-button:hover {
-    background-image: linear-gradient(to right, #3cba92 0%, rgb(138, 227, 188) 100%);
-    transform: scale(1.05);
-}
+    button:hover {
+        background-image: linear-gradient(to right, #3cba92 0%, rgb(138, 227, 188) 100%);
+        transform: scale(1.01);
+    }
 
     ul {
     display:flex;
@@ -131,10 +172,17 @@ button:hover {
         transform: scale(1.05);
     }
 
-#back{
-background:none;
-padding:0;
-margin: 0 1rem}
+    #back{
+        background:none;
+        padding:0;
+        margin: 0 1rem;
+    }
+
+    .sortingDiv{
+        display:flex;
+        flex-direction:column;
+        gap:1rem;
+    }
 `;
 }
 

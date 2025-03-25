@@ -22,7 +22,7 @@ export class AddtoCart extends LitElement {
     }
 
     private isAlreadyInTheCart(){
-        return this.Cart.items.find(item => item.id === this.product?.id)
+        return this.Cart.items.find(item => item.id === this.product?.id) 
     }
 
     private handleQuantityChange(event : Event){
@@ -42,15 +42,15 @@ export class AddtoCart extends LitElement {
     }
     render() {
         return html`
-            ${this.isAlreadyInTheCart()?
+            ${  this.quantity >0?
                 html`
                 <div class="quantityChange">
-                    <button id="-"  @click=${this.handleQuantityChange}>-</button>
+                    <button id="-"  @click=${this.handleQuantityChange} class="quantity">-</button>
                     <span id="quantity">${this.quantity}</span>
-                    <button id="+" @click=${this.handleQuantityChange}>+</button>
+                    <button id="+" @click=${this.handleQuantityChange} class="quantity">+</button>
                 </div>
                 `
-                : html`<button @click=${this.addToCart}>Add to cart</button>`   
+                : html`<button @click=${this.addToCart} class="addtoCart">Add to cart</button>`   
             }
         `
     }
@@ -67,7 +67,12 @@ export class AddtoCart extends LitElement {
             cursor: pointer;
             transition: background 0.4s ease-in-out;
             }
-
+            .addtoCart{
+                width:100%;
+            }
+            .quantity{
+                width:25%;
+            }
             button:hover {
                 background:rgb(80, 174, 133);
             }
@@ -76,7 +81,6 @@ export class AddtoCart extends LitElement {
                 display:flex;
                 align-items:center;
                 justify-content:space-around;
-
             }`
 }
 declare global {

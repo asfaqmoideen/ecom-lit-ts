@@ -4,6 +4,7 @@ import { Router } from '@vaadin/router';
 import { provide } from '@lit/context';
 import { cartContext, loggedInContext, userContext } from './contexts/GlobalContexts';
 import { Product, User } from './constants/GlobalTypes';
+import { AuthenticationController } from './controllers/AuthenticationController';
 import './components/CustomHeader';
 import './components/CustomFooter';
 import './components/HomeContainer';
@@ -14,11 +15,13 @@ import './components/loginContainer'
 
 @customElement('app-main')
 export class AppMain extends LitElement {
+
+  private auth = new AuthenticationController();
   @provide({ context: loggedInContext }) loggedIn = false;
   @provide({ context: cartContext }) cart: { items: Product[] } = { items: [] };
   @provide({ context: userContext }) user = {} as User;
 
-  firstUpdated() {
+  async firstUpdated() {
     const router = new Router(this.renderRoot.querySelector('#outlet'));
     router.setRoutes([
       { path: '/', component: 'home-container' },
@@ -36,6 +39,15 @@ export class AppMain extends LitElement {
       this.addToCart((e as CustomEvent).detail.product);
     });
     
+    console.log("reviewing logggen In detials");
+    const user = await this.auth.authenticate();
+    
+    if(user) {
+      this.loggedIn = true;
+      this.user = user.user;
+      console.log("User already loggen In !");
+      
+    }
   }
 
   setLoggedIn(status: boolean, user?: User) {

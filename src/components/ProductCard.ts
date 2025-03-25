@@ -92,6 +92,7 @@ export class ProductCard extends LitElement {
             padding: 0.6rem;
             width: 100%;
             display:flex;
+            gap:.5rem;
             align-items:center;
             flex-direction:column;
         }

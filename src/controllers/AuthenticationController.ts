@@ -46,6 +46,7 @@ export class AuthenticationController{
                     console.log("Tab is inactive, logged out");
                 }
             });
+            this.scheduleTokenRefresh();
         }, (this.loginService.expireInMins-1) * 60000);
     }
 
