@@ -85,6 +85,7 @@ export class AppMain extends LitElement {
     }
     #outlet {
       flex: 1;
+      display:flex;
     }
   `;
 }
