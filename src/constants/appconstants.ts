@@ -1,4 +1,4 @@
-import { Product } from "./GlobalTypes";
+import { Product, User } from "./GlobalTypes";
 
 export const AppTitle = {
     title : "ByteBazaar",
@@ -54,6 +54,6 @@ export const sortableFields: (keyof Product)[] = [
     "shipping-addresses",
     "billing-addresses",
     "payment-information",
-    "order-history",
-    "account-settings",
   ];
+
+ 

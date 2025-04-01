@@ -38,7 +38,13 @@ export class AppMain extends LitElement {
     this.addEventListener('add-to-cart', (e) => {   
       this.addToCart((e as CustomEvent).detail.product);
     });
-    
+    this.addEventListener('logout-confirm', (e)=>{
+      const logoutRequest = (e as CustomEvent).detail.logoutRequest;
+      if(logoutRequest) {
+        this.loggedIn = false;
+        this.requestUpdate();
+      }
+    })
     console.log("reviewing logggen In detials");
     const user = await this.auth.authenticate();
     
@@ -85,6 +91,7 @@ export class AppMain extends LitElement {
     }
     #outlet {
       flex: 1;
+      display:flex;
     }
   `;
 }
