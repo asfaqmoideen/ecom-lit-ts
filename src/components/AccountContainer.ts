@@ -4,14 +4,14 @@ import { consume } from "@lit/context";
 import { loggedInContext, userContext } from "../contexts/GlobalContexts";
 import { User } from "../constants/GlobalTypes";
 import "./loginContainer";
-import { ecommerceProfileSections, sampleUser1 } from "../constants/appconstants";
+import { ecommerceProfileSections } from "../constants/appconstants";
 import { convertToPascalCase } from "../services/helperMethods";
 import './OverlayModal'
 import { Router } from "@vaadin/router";
 @customElement("account-container")
 export class AccountContainer extends LitElement {
   @consume({ context: loggedInContext }) @state() loggedIn?: boolean;
-  @state() user: User = sampleUser1;
+  @consume({ context: userContext }) @state() user?: User 
   @state() activeSection: string = "personal-information";
   @state() isLogoutModalVisible :boolean = false;
 
@@ -184,10 +184,12 @@ export class AccountContainer extends LitElement {
 
     .sidebar .active {
       background-color: #d0d0d0;
+      border-radius:1rem;
     }
 
     .sidebar ul li:hover, .sidebar .logout-button:hover{
         background-color: #c0c0c0;
+        border-radius:1rem;
     }
 
     .content-container {

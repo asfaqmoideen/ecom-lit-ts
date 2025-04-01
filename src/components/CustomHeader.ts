@@ -2,13 +2,14 @@ import { LitElement, html, css } from "lit";
 import { customElement } from "lit/decorators.js";
 import { AppTitle, headerItems } from "../constants/appconstants";
 import "./MasterSearch";
+import { Router } from "@vaadin/router";
 
 
 @customElement("custom-header")
 export class CustomHeader extends LitElement{
 
     private handleTitleClick(){
-        document.location.href = "./";
+        Router.go("/");
     }
     
     render(){
