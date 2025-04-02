@@ -4,7 +4,7 @@ import { AppTitle } from "../constants/appconstants";
 import { AuthenticationController } from "../controllers/AuthenticationController";
 import { consume } from "@lit/context";
 import { loggedInContext } from "../contexts/GlobalContexts";
-
+import './CustomButton'
 @customElement("login-container")
 export class LoginContainer extends LitElement {
   @state() private isLoginMode = true;
@@ -55,7 +55,7 @@ export class LoginContainer extends LitElement {
 
   private switchMode() {
     this.isLoginMode = !this.isLoginMode;
-  }
+  } 
 
   private setError(id: string, message: string) {
     const errorElement = this.shadowRoot?.getElementById(id);
@@ -178,21 +178,12 @@ export class LoginContainer extends LitElement {
                 border-radius: 8px;
                 width: 20em;
             }
-            button{
-                cursor: pointer;
-            }
-            .imageDiv{
-                display: flex;
-                flex-direction:column;
-                align-items:center;
-            }
-            
+          
             button {
-            width: 45%;
             padding: 0.6rem;
             border: none;
-            border-radius: 0.4rem;
-            background:rgb(5, 201, 116);
+            border-radius: .8rem;
+            background-color:#546E7A;
             color: white;
             cursor: pointer;
             margin-top: 0.8rem;
@@ -200,7 +191,12 @@ export class LoginContainer extends LitElement {
             }
 
             button:hover {
-            background:rgb(80, 174, 133);
+            background:#37474F;
+            }
+            .imageDiv{
+                display: flex;
+                flex-direction:column;
+                align-items:center;
             }
 
             .switch-text {

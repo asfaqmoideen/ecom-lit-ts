@@ -30,7 +30,7 @@ export class CustomHeader extends LitElement{
             justify-content : space-between;
             align-items : center;
             color: white;
-            background-image: linear-gradient(to top, #0ba360 0%, #3cba92 100%);
+            background-color: #37474F
         }
 
         ul{

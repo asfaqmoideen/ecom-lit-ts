@@ -1,7 +1,7 @@
 
 import { LitElement, html, css } from "lit";
 import { customElement, property, state } from "lit/decorators.js"
-
+import './CustomButton'
 @customElement("pagination-container")
 export class PaginationContainer extends LitElement {
 
@@ -48,8 +48,8 @@ export class PaginationContainer extends LitElement {
     render() {
         return html`
         ${this.page !==1 ? html`
-        <button class="btn" id="f" @click=${this.handlePageButtonClick} >First</button>
-        <button class="btn" id="p" @click=${this.handlePageButtonClick} >Prev.</button>` 
+        <custom-button class="btn" id="f" @click=${this.handlePageButtonClick} >First</custom-button>
+        <custom-button class="btn" id="p" @click=${this.handlePageButtonClick} >Prev.</custom-button>` 
         : html``}
         
         ${
@@ -57,8 +57,8 @@ export class PaginationContainer extends LitElement {
         }
 
         ${this.page !== this.numberOfPages ? html`
-            <button class="btn" id="n" @click=${this.handlePageButtonClick} >Next</button>
-            <button class="btn" id="l" @click=${this.handlePageButtonClick} >Last</button>` 
+            <custom-button class="btn" id="n" @click=${this.handlePageButtonClick} >Next</custom-button>
+            <custom-button class="btn" id="l" @click=${this.handlePageButtonClick} >Last</custom-button>` 
             : html``
         }
         `;
@@ -72,19 +72,7 @@ export class PaginationContainer extends LitElement {
                 align-items:center;
                 width:100%;
             }
-            button {
-            padding: 0.6rem;
-            border: none;
-            border-radius: 0.4rem;
-            background:rgb(5, 201, 116);
-            color: white;
-            cursor: pointer;
-            transition: background 0.4s ease-in-out;
-            }
 
-            button:hover {
-            background:rgb(80, 174, 133);
-            }
         `
     ];
 

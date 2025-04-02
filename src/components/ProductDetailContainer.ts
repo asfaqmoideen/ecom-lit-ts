@@ -4,7 +4,7 @@ import { APIService } from "../services/APIService";
 import {Product} from "../constants/GlobalTypes";
 import './CustomLoader';
 import { convertToPascalCase, calculateDisPrice } from "../services/helperMethods";
-import './AddToCart'
+import './AddtoCart'
 
 
 @customElement("product-detail-container")
@@ -47,7 +47,7 @@ export class ProductDetailContainer extends LitElement {
                     <p class="description">${this.product.description}</p>
                     <div class="actionDiv">
                         <ecom-addtocart .product=${this.product}></ecom-addtocart>
-                       <button class="action">Buy Now</button>
+                        <custom-button class="action">Buy Now</custom-button>
                     </div>
               </div>
             </div>

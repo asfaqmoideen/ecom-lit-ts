@@ -3,6 +3,7 @@ import { customElement, property, state} from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
 import { Product } from "../constants/GlobalTypes";
+import './CustomButton'
 
 
 @customElement("ecom-addtocart")
@@ -19,10 +20,6 @@ export class AddtoCart extends LitElement {
             composed:true,
         }));
         this.quantity++;
-    }
-
-    private isAlreadyInTheCart(){
-        return this.Cart.items.find(item => item.id === this.product?.id) 
     }
 
     private handleQuantityChange(event : Event){
@@ -45,27 +42,18 @@ export class AddtoCart extends LitElement {
             ${  this.quantity >0?
                 html`
                 <div class="quantityChange">
-                    <button id="-"  @click=${this.handleQuantityChange} class="quantity">-</button>
+                    <custom-button id="-"  @click=${this.handleQuantityChange} class="quantity">-</custom-button>
                     <span id="quantity">${this.quantity}</span>
-                    <button id="+" @click=${this.handleQuantityChange} class="quantity">+</button>
+                    <custom-button id="+" @click=${this.handleQuantityChange} class="quantity">+</custom-button>
                 </div>
                 `
-                : html`<button @click=${this.addToCart} class="addtoCart">Add to cart</button>`   
+                : html`<custom-button @click=${this.addToCart} class="addtoCart">Add to cart</custom-button>`   
             }
         `
     }
     static styles = css`
-            button {
-            display: inline;
-            text-align:center;
-            padding: 0.4rem;
-            border: none;
-            width:auto;
-            border-radius: 0.4rem;
-            background:rgb(5, 201, 116);
-            color: white;
-            cursor: pointer;
-            transition: background 0.4s ease-in-out;
+            :host{
+                all:initial;
             }
             .addtoCart{
                 width:100%;

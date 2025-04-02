@@ -4,6 +4,7 @@ import { convertToPascalCase } from "../services/helperMethods";
 import "./ProductsContainer"
 import { APIService } from "../services/APIService";
 import { sortableFields } from "../constants/appconstants";
+import './CustomButton'
 
 @customElement("ecom-mastersearch")
 export class MasterSearch extends LitElement{
@@ -81,8 +82,8 @@ export class MasterSearch extends LitElement{
                 <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>⬅️</button>` : ''}${this.title}</h3>
                 <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
                 <div class = "optionsDiv">
-                    <button @click=${this.toggleCategoryModal}>Select Category</button>
-                    <button @click=${this.toggleSortModal}>Sort</button>
+                    <custom-button @click=${this.toggleCategoryModal}>Select Category</custom-button>
+                    <custom-button @click=${this.toggleSortModal}>Sort</custom-button>
                 </div>
             </div>
                 ${this.isCategoryModalVisible ? html`
@@ -95,16 +96,20 @@ export class MasterSearch extends LitElement{
                 ${this.isSortModalVisible ? html`
                     <overlay-modal @close-clicked=${this.toggleSortModal} modalTitle = "Select Sort">
                             <div class="sortingDiv">
-                                <label for="sort-order">Order</label>
-                                <select name="sortorder" id="sort-order">
-                                    <option value="asc">Ascending</option>
-                                    <option value="desc">Descending</option>
-                                </select>
-                                <label for="sort-by">Sort By </label>
-                                <select name="sortby" id="sort-by" >
-                                    ${sortableFields.map(sf => html` <option value="${sf}">${convertToPascalCase(sf)}</option>`)}
-                                </select>
-                                <button @click=${this.handleSort}>Show results</button>
+                                <div class="selectgrp">
+                                    <label for="sort-order">Order</label>
+                                    <select name="sortorder" id="sort-order">
+                                        <option value="asc">Ascending</option>
+                                        <option value="desc">Descending</option>
+                                    </select>
+                                </div>
+                                <div class="selectgrp">
+                                    <label for="sort-by">Sort By </label>
+                                    <select name="sortby" id="sort-by" >
+                                        ${sortableFields.map(sf => html` <option value="${sf}">${convertToPascalCase(sf)}</option>`)}
+                                    </select>
+                                </div>
+                                <custom-button @click=${this.handleSort}>Show results</custom-button>
                             </div>
                     </overlay-modal>
           `: ''}
@@ -137,20 +142,18 @@ export class MasterSearch extends LitElement{
         transition: border-color 0.3s ease-in-out;
     }
 
-    button, select {
-        
+        select {
+        display:inline;
+        width:max-content;
         padding: 0.5rem 1rem; 
         border-radius: 0.7rem;
         border: none;
-        background-image: linear-gradient(to right, rgb(138, 227, 188) 0%, #3cba92 100%);
+        background-color: #90a4ae;
         cursor: pointer;
         transition: background 0.3s ease-in-out, transform 0.2s;
     }
 
-    button:hover {
-        background-image: linear-gradient(to right, #3cba92 0%, rgb(138, 227, 188) 100%);
-        transform: scale(1.01);
-    }
+
 
     ul {
     display:flex;
@@ -164,7 +167,7 @@ export class MasterSearch extends LitElement{
     margin: .5rem;
     border-radius : 0.7rem;
     border:none;
-    background-image: linear-gradient(to right,rgb(138, 227, 188) 0%, #3cba92 100%);
+    background-color: #90a4ae;
     cursor:pointer;
     }
 
@@ -182,6 +185,11 @@ export class MasterSearch extends LitElement{
         display:flex;
         flex-direction:column;
         gap:1rem;
+    }
+    .selectgrp{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
     }
 `;
 }

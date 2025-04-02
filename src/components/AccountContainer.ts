@@ -138,7 +138,7 @@ export class AccountContainer extends LitElement {
     }
     .sidebar {
       margin: 1rem;
-      background-image: linear-gradient(to right, #0ba360 0%, #3cba92 100%);
+        background-color: #546E7A;
       border-radius: 8px;
       min-width: 220px;
       display:flex;

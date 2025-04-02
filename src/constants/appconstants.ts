@@ -21,8 +21,6 @@ export const headerItems  = [
 ]
 
 export const sortableFields: (keyof Product)[] = [
-    "id",
-    "title",
     "category",
     "price",
     "discountPercentage",
