@@ -15,7 +15,7 @@ export class CustomFooter extends LitElement{
     static styles = css`
         :host{ 
             all : initial;
-            background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            background-color: #546E7A;
             width :100%;
         }
         p{

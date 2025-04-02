@@ -76,11 +76,12 @@ export class HomeContainer extends LitElement{
             @clear-results=${this.handleClearResults}
             @sort-change=${this.handleSortChange}>
         </ecom-mastersearch>
-        <div class="content">
-            ${this.isLoading ? html`<custom-loader></custom-loader>` : html` 
+            ${this.isLoading ? html`<custom-loader></custom-loader>` : html`
+            <div class="content">
             <ecom-productscontainer .products=${this.data?.products.slice(this.startProduct, this.endProduct)}></ecom-productscontainer>
-            <pagination-container @page-change=${this.handlePageChange} .total=${this.data?.total}></pagination-container>`} 
-        </div>
+            <pagination-container @page-change=${this.handlePageChange} .total=${this.data?.total}></pagination-container>
+            </div>
+            `} 
         `;
     }
 
@@ -91,12 +92,12 @@ export class HomeContainer extends LitElement{
             margin:1rem;
         }
 
-        .content{
+        custom-loader{
             display:flex;
-            height:100%;
             align-items:center;
             justify-content:center;
             flex-direction:column;
+            height:calc(100vh - 13rem);
         }
 
     `

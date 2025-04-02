@@ -1,19 +1,21 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, state } from "lit/decorators.js"
+import { customElement, property} from "lit/decorators.js"
 
 @customElement("custom-button")
 export class CustomButton extends LitElement {
+    @property({ attribute: true }) width = "100%"
+    
     static styles = 
         css`
             :host {
-                display: block;
+                all:initial;
             }
             button {
-            width: 45%;
+            width:100%;
             padding: 0.6rem;
             border: none;
-            border-radius: 0.4rem;
-            background:rgb(5, 201, 116);
+            border-radius: .8rem;
+            background-color:#546E7A;
             color: white;
             cursor: pointer;
             margin-top: 0.8rem;
@@ -21,14 +23,16 @@ export class CustomButton extends LitElement {
             }
 
             button:hover {
-            background:rgb(80, 174, 133);
+            background:#37474F;
             }
 
         `;
 
     render() {
         return html`
-        <button></button>`;
+        <button>
+            <slot></slot>
+        </button>`;
     }
 }
 

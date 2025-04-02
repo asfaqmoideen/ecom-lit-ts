@@ -2,7 +2,7 @@ import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import {Product} from "../constants/GlobalTypes";
 import { calculateDisPrice } from "../services/helperMethods";
-import './AddToCart'
+import './AddtoCart'
 
 @customElement("ecom-productcard")
 export class ProductCard extends LitElement {
@@ -26,7 +26,7 @@ export class ProductCard extends LitElement {
                         $${calculateDisPrice(this.product)} 
                         <span id="actualprice">$${this.product.price}</span>
                     </p>
-                    <div class="btndiv" @click=${(e:Event)=> e.stopPropagation()}><ecom-addtocart .product=${this.product}></ecom-addtocart></div>
+                    <div class="btndiv" @click=${(e:Event)=> e.stopPropagation()}><ecom-addtocart .product=${this.product} class="addtocart"></ecom-addtocart></div>
                 </div>
             </div>
         `;
@@ -40,6 +40,9 @@ export class ProductCard extends LitElement {
             justify-content: center;
         }
 
+        .addtocart{
+            width:100%;
+        }
         p, h4 {
             margin: 0;
         }
