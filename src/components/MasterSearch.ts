@@ -82,7 +82,7 @@ export class MasterSearch extends LitElement{
                 <h3> ${this.isCategorySearchApplied ? html`<button id="back" @click=${this.clearResults}>⬅️</button>` : ''}${this.title}</h3>
                 <input type="text" id="headersearch" placeholder="Search your favourite product" @input=${this.handleSearchInput}/>
                 <div class = "optionsDiv">
-                    <custom-button @click=${this.toggleCategoryModal}>Select Category</custom-button>
+                    <custom-button @click=${this.toggleCategoryModal}>Categories</custom-button>
                     <custom-button @click=${this.toggleSortModal}>Sort</custom-button>
                 </div>
             </div>
@@ -142,7 +142,7 @@ export class MasterSearch extends LitElement{
         transition: border-color 0.3s ease-in-out;
     }
 
-        select {
+    select {
         display:inline;
         width:max-content;
         padding: 0.5rem 1rem; 
@@ -156,19 +156,19 @@ export class MasterSearch extends LitElement{
 
 
     ul {
-    display:flex;
-    flex-wrap:wrap;
-    list-style :none;
-    padding:0;
+        display:flex;
+        flex-wrap:wrap;
+        list-style :none;
+        padding:0;
     }
 
     ul li{
-    padding :0.5rem 0.8rem;
-    margin: .5rem;
-    border-radius : 0.7rem;
-    border:none;
-    background-color: #90a4ae;
-    cursor:pointer;
+        padding :0.5rem 0.8rem;
+        margin: .5rem;
+        border-radius : 0.7rem;
+        border:none;
+        background-color: #90a4ae;
+        cursor:pointer;
     }
 
     ul :hover {
@@ -190,6 +190,10 @@ export class MasterSearch extends LitElement{
         display:flex;
         justify-content:space-between;
         align-items:center;
+    }
+    .optionsDiv{
+        display:flex;
+        gap:1rem;
     }
 `;
 }

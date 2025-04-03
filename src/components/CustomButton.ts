@@ -15,7 +15,7 @@ export class CustomButton extends LitElement {
             padding: 0.6rem;
             border: none;
             border-radius: .8rem;
-            background-color:#546E7A;
+            background-color:#26333a;
             color: white;
             cursor: pointer;
             margin-top: 0.8rem;

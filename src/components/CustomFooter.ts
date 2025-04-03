@@ -15,11 +15,12 @@ export class CustomFooter extends LitElement{
     static styles = css`
         :host{ 
             all : initial;
-            background-color: #546E7A;
+            background-color: #020405;
             width :100%;
         }
         p{
         padding : 0;
+        color:white;
         }
         div{   
             width :100%;

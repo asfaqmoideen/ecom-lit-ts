@@ -3,7 +3,7 @@ import { customElement } from 'lit/decorators.js';
 import { Router } from '@vaadin/router';
 import { provide } from '@lit/context';
 import { cartContext, loggedInContext, userContext } from './contexts/GlobalContexts';
-import { Product, User } from './constants/GlobalTypes';
+import { Product, User, Cart } from './constants/GlobalTypes';
 import { AuthenticationController } from './controllers/AuthenticationController';
 import './components/CustomHeader';
 import './components/CustomFooter';
@@ -12,13 +12,15 @@ import './components/CartContianer'
 import './components/AccountContainer';
 import './components/ProductDetailContainer';
 import './components/loginContainer'
+import { CartController } from './controllers/CartController';
 
 @customElement('app-main')
 export class AppMain extends LitElement {
 
   private auth = new AuthenticationController();
+  private cartCon = new CartController();
   @provide({ context: loggedInContext }) loggedIn = false;
-  @provide({ context: cartContext }) cart: { items: Product[] } = { items: [] };
+  @provide({ context: cartContext }) cart = {} as Cart;
   @provide({ context: userContext }) user = {} as User;
 
   async firstUpdated() {
@@ -28,12 +30,14 @@ export class AppMain extends LitElement {
       { path: '/account', component: 'account-container' },
       { path: '/cart', component: 'cart-container' },
       { path: '/product', component: 'product-detail-container' },
-      { path: '/login', component: 'login-container' }
+      { path: '/login', component: 'login-container' },
+      { path: '(.*)', component: 'home-container' },
     ]);
 
 
     this.addEventListener('update-login', (e) => {   
       this.setLoggedIn((e as CustomEvent).detail.status, (e as CustomEvent).detail.user);
+      this.setUserCart((e as CustomEvent).detail.user);
     });
     this.addEventListener('add-to-cart', (e) => {   
       this.addToCart((e as CustomEvent).detail.product);
@@ -43,6 +47,7 @@ export class AppMain extends LitElement {
       if(logoutRequest) {
         this.loggedIn = false;
         this.requestUpdate();
+        sessionStorage.removeItem("token");
       }
     })
     console.log("reviewing logggen In detials");
@@ -52,7 +57,6 @@ export class AppMain extends LitElement {
       this.loggedIn = true;
       this.user = user.user;
       console.log("User already loggen In !");
-      
     }
   }
 
@@ -63,7 +67,15 @@ export class AppMain extends LitElement {
   }
 
   addToCart(product: Product) {
-    this.cart = { items: [...this.cart.items, product] };
+    // this.cart = { products: [...this.cart.products, product] };
+    this.requestUpdate();
+  }
+
+  async setUserCart(user: User) {
+    const cart = await this.cartCon.getUserCart(user.id);
+    console.log(user.id);
+    
+    if(cart) this.cart = cart;
     this.requestUpdate();
   }
 
