@@ -1,22 +1,20 @@
 # 🛒 Simple E-commerce Website with Lit + TypeScript
 
-A lightweight and fast e-commerce web app built using  **Lit** ,  **TypeScript** , and  **Vite** .
+A lightweight and fast e-commerce web app built using  **Lit** , **TypeScript** , and  **Vite** .
 
 ## 🚀 Features
 
 * 🎨 **Component-Based** – Lit ensures reusable and efficient web components.
-* 🔐* **Authentication** – Basic user authentication.
+* 🔐 **Authentication** – Basic user authentication.
 * 🛍️ **Product Management** – Display, filter, and search products.
-* 🛒 * **Cart & Checkout** – Add products to the cart and proceed to checkout.
-
-  **on development queue*
+* 🛒 **Cart & Checkout** – Add products to the cart and proceed to checkout.
 
 ## 🛠 Installation
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/simple-ecommerce-lit.git
-   cd simple-ecommerce-lit
+   git clone https://github.com/asfaqmoideen/ecom-lit-ts.git
+   cd ecom-lit-ts
    ```
 2. Install dependencies:
    ```sh
@@ -49,7 +47,3 @@ npm run build
    git commit -m "Add feature-name"
    ```
 4. Push & submit a PR.
-
-## 📜 License
-
-This project is licensed under the MIT License.

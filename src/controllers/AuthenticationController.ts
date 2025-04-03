@@ -14,7 +14,6 @@ export class AuthenticationController{
     public async login(user :UserCredentials){
         try{
             const reponse = await this.loginService.tryLogin(user);
-            console.log("", reponse);
             sessionStorage.setItem("token", reponse.accessToken);
             sessionStorage.setItem("refreshToken", reponse.refreshToken);
             this.loginSuccessfull = true;
@@ -53,7 +52,6 @@ export class AuthenticationController{
     public async tokenRefresh(){
         try{
             const response = await this.loginService.tryRefreshingUserToken(sessionStorage.getItem("refreshToken"));
-            console.log(response);
         }
         catch(e){
             throw e;

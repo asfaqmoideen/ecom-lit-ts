@@ -1,4 +1,4 @@
-import {Product} from "../constants/GlobalTypes";
+import {Product, ProductInCart} from "../constants/GlobalTypes";
 
 export function convertToPascalCase(...words: string[]): string {
         return words
@@ -8,6 +8,6 @@ export function convertToPascalCase(...words: string[]): string {
             .join(" "); 
 }
 
-export function calculateDisPrice(product : Product): number {
+export function calculateDisPrice(product : Product | ProductInCart): number {
     return Number((product.price - (product.price * product.discountPercentage / 100)).toFixed(2));
 }

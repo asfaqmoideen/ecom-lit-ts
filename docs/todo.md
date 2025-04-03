@@ -2,6 +2,6 @@ Feature to do
 
 * [X] Pagination
 * [X] User Login, Logout, session
-* [ ] User Cart, Checkout
-* [ ] Responsiveness
-* [ ] Search with Sort, Filter
+* [X] User Cart, Checkout
+* [X] Responsiveness
+* [X] Search with Sort, Filter
