@@ -13,6 +13,7 @@ import './components/AccountContainer';
 import './components/ProductDetailContainer';
 import './components/loginContainer'
 import { CartController } from './controllers/CartController';
+import { mapProductToCart } from './services/helperMethods';
 
 @customElement('app-main')
 export class AppMain extends LitElement {
@@ -40,7 +41,7 @@ export class AppMain extends LitElement {
       this.setUserCart((e as CustomEvent).detail.user);
     });
     this.addEventListener('add-to-cart', (e) => {   
-      this.addToCart((e as CustomEvent).detail.product);
+      this.addToCart((e as CustomEvent).detail.product, (e as CustomEvent).detail.quantity );
     });
     this.addEventListener('logout-confirm', (e)=>{
       const logoutRequest = (e as CustomEvent).detail.logoutRequest;
@@ -66,8 +67,13 @@ export class AppMain extends LitElement {
     this.requestUpdate();
   }
 
-  addToCart(product: Product) {
-    // this.cart = { products: [...this.cart.products, product] };
+  addToCart(product: Product, quantity: number) {
+    console.log(product, quantity);
+    
+    const productToCart = mapProductToCart(product, quantity);
+    console.log(productToCart);
+    
+    this.cart.products.push(productToCart);
     this.requestUpdate();
   }
 

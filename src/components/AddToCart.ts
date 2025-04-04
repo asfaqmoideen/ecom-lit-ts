@@ -13,9 +13,16 @@ export class AddtoCart extends LitElement {
     @consume({context: loggedInContext}) LoggedIn? :boolean;
     @state() quantity = 0;
 
-    private addToCart() {   
+    private addToCart() { 
+
+        if (this.quantity === 0) {
+            this.quantity = 1;
+        }
         this.dispatchEvent(new CustomEvent("add-to-cart", {
-            detail: {product : this.product},
+            detail: {
+                    product : this.product,
+                    quantity : this.quantity
+            },
             bubbles : true,
             composed:true,
         }));
@@ -24,7 +31,10 @@ export class AddtoCart extends LitElement {
 
     private changeQuantity() {
         this.dispatchEvent(new CustomEvent("quantity-change", {
-            detail: {quantity: this.quantity},
+            detail: {
+                    product : this.product,
+                    quantity: this.quantity
+            },
             bubbles : true,
             composed : true,
         }))
