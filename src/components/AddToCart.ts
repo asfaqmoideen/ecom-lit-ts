@@ -1,4 +1,4 @@
-import { LitElement, html, css, CSSResultGroup } from "lit";
+import { LitElement, html, css} from "lit";
 import { customElement, property, state} from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
@@ -13,11 +13,17 @@ export class AddtoCart extends LitElement {
     @consume({context: loggedInContext}) LoggedIn? :boolean;
     @state() quantity = 0;
 
-    private addToCart() { 
+    private updateInitialQuantity(){
+        const productInCart = this.cart?.products.find(p => p.id === this.product?.id);
+        this.quantity = productInCart?.quantity ? productInCart.quantity : 0;
+    }
 
-        if (this.quantity === 0) {
-            this.quantity = 1;
-        }
+    protected updated(): void {
+        this.updateInitialQuantity();
+    }
+    
+    private addToCart() { 
+        this.quantity++;
         this.dispatchEvent(new CustomEvent("add-to-cart", {
             detail: {
                     product : this.product,
@@ -26,7 +32,6 @@ export class AddtoCart extends LitElement {
             bubbles : true,
             composed:true,
         }));
-        this.quantity++;
     }
 
     private changeQuantity() {

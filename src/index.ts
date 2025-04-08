@@ -68,10 +68,11 @@ export class AppMain extends LitElement {
   }
 
   addToCart(product: Product, quantity: number) {
-    console.log(product, quantity);
-    
+
+    if(this.cart.products.find(p => p.id === product.id)) {
+         
+    }
     const productToCart = mapProductToCart(product, quantity);
-    console.log(productToCart);
     
     this.cart.products.push(productToCart);
     this.requestUpdate();

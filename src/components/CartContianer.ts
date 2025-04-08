@@ -2,9 +2,8 @@ import { LitElement, html, css } from "lit";
 import { customElement, property, state} from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
-import { Product, Cart } from "../constants/GlobalTypes";
+import { Cart } from "../constants/GlobalTypes";
 import { Router } from "@vaadin/router";
-import { sampleCart1 } from "../temp/tempconstant";
 import { calculateDisPrice } from "../services/helperMethods";
 
 

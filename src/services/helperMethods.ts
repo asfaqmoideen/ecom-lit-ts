@@ -14,7 +14,7 @@ export function calculateDisPrice(product : Product | ProductInCart): number {
 
 export function mapProductToCart(product: Product, quantity: number): ProductInCart {
     const total = product.price * quantity;
-    const discountedTotal = total - (total * product.discountPercentage) / 100;
+    const discountedTotal = (total - (total * product.discountPercentage) / 100);
   
     return {
       id: product.id,
