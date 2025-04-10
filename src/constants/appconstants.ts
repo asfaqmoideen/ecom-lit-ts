@@ -1,4 +1,4 @@
-import { Product, User } from "./GlobalTypes";
+import { Product} from "./GlobalTypes";
 
 export const AppTitle = {
     title : "ByteBazaar",

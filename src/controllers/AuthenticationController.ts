@@ -51,7 +51,7 @@ export class AuthenticationController{
 
     public async tokenRefresh(){
         try{
-            const response = await this.loginService.tryRefreshingUserToken(sessionStorage.getItem("refreshToken"));
+            await this.loginService.tryRefreshingUserToken(sessionStorage.getItem("refreshToken"));
         }
         catch(e){
             throw e;

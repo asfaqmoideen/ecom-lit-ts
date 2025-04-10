@@ -4,8 +4,7 @@ import { APIService } from "../services/APIService";
 import {Product} from "../constants/GlobalTypes";
 import './CustomLoader';
 import { convertToPascalCase, calculateDisPrice } from "../services/helperMethods";
-import './AddtoCart'
-
+import './AddToCart'
 
 @customElement("product-detail-container")
 export class ProductDetailContainer extends LitElement {

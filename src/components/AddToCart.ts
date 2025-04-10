@@ -115,6 +115,6 @@ export class AddtoCart extends LitElement {
 }
 declare global {
     interface HTMLElementTagNameMap {
-        "AddtoCart": AddtoCart;
+        "ecom-addtocart": AddtoCart;
     }
 }

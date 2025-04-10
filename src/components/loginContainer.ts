@@ -43,7 +43,6 @@ export class LoginContainer extends LitElement {
       if (!form) throw new Error("Invalid Form Submission");
 
       const formData = new FormData(form);
-      const username = formData.get("name") as string;
       const password = formData.get("npassword") as string;
       const confirmPassword = formData.get("fpassword") as string;
 
