@@ -1,30 +1,53 @@
-import { LitElement, html, css, CSSResultGroup } from "lit";
+import { LitElement, html, css} from "lit";
 import { customElement, property, state} from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
 import { Cart, Product } from "../constants/GlobalTypes";
 import './CustomButton'
+import { Router } from "@vaadin/router";
 
 
 @customElement("ecom-addtocart")
 export class AddtoCart extends LitElement {
     @property({attribute:true}) product :Product | null = null;
-    @consume({context: cartContext}) @state()cart : Cart | null = null;
+    @consume({context: cartContext}) cart : Cart | null = null;
     @consume({context: loggedInContext}) LoggedIn? :boolean;
     @state() quantity = 0;
 
-    private addToCart() {   
+    protected willUpdate(changedProps: Map<string, unknown>): void {
+        if (changedProps.has('cart') || changedProps.has('product')) {
+          const productInCart = this.cart?.products.find(p => p.id === this.product?.id);
+          const newQuantity = productInCart?.quantity ?? 0;
+      
+          if (this.quantity !== newQuantity) {
+            this.quantity = newQuantity;
+          }
+        }
+      }
+      
+
+    private addToCart() { 
+        if(!this.LoggedIn){
+            Router.go("/login");
+            return;
+        }
+        this.quantity++;
         this.dispatchEvent(new CustomEvent("add-to-cart", {
-            detail: {product : this.product},
+            detail: {
+                    product : this.product,
+                    quantity : this.quantity
+            },
             bubbles : true,
             composed:true,
         }));
-        this.quantity++;
     }
 
     private changeQuantity() {
         this.dispatchEvent(new CustomEvent("quantity-change", {
-            detail: {quantity: this.quantity},
+            detail: {
+                    product : this.product,
+                    quantity: this.quantity
+            },
             bubbles : true,
             composed : true,
         }))
@@ -46,10 +69,11 @@ export class AddtoCart extends LitElement {
             }
             else if(element.id == "-"){
                 this.quantity --;
-                this.changeQuantity();
-                if(this.quantity==0){
+                if(this.quantity == 0){
                     this.removeFromCart();
+                    return;
                 }
+                this.changeQuantity();
             }
         }
         
