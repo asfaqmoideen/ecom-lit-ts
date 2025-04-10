@@ -2,8 +2,7 @@ import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
 import {Product} from "../constants/GlobalTypes";
 import { calculateDisPrice } from "../services/helperMethods";
-import './AddtoCart'
-
+import './AddToCart'
 @customElement("ecom-productcard")
 export class ProductCard extends LitElement {
 

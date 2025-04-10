@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { customElement, state, property, eventOptions } from "lit/decorators.js";
+import { customElement,  property } from "lit/decorators.js";
 
 
 @customElement('overlay-modal')
