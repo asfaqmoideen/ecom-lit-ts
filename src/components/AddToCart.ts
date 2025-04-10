@@ -21,7 +21,7 @@ export class AddtoCart extends LitElement {
     protected updated(): void {
         this.updateInitialQuantity();
     }
-    
+
     private addToCart() { 
         this.quantity++;
         this.dispatchEvent(new CustomEvent("add-to-cart", {
@@ -61,10 +61,11 @@ export class AddtoCart extends LitElement {
             }
             else if(element.id == "-"){
                 this.quantity --;
-                this.changeQuantity();
-                if(this.quantity==0){
+                if(this.quantity == 0){
                     this.removeFromCart();
+                    return;
                 }
+                this.changeQuantity();
             }
         }
         

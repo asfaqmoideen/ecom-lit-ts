@@ -90,6 +90,7 @@ export class CartContainer extends LitElement{
         display:flex;
         justify-content:center;
         align-items:center;
+        flex-wrap:wrap;
         }
         .carts-container{
             margin:1rem;

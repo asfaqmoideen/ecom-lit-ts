@@ -43,6 +43,13 @@ export class AppMain extends LitElement {
     this.addEventListener('add-to-cart', (e) => {   
       this.addToCart((e as CustomEvent).detail.product, (e as CustomEvent).detail.quantity );
     });
+    this.addEventListener('remove-from-cart', (e) => {   
+      this.removeFromCart((e as CustomEvent).detail.product);
+    });
+
+    this.addEventListener('quantity-change', (e)=>{
+      this.quantityChange((e as CustomEvent).detail.product, (e as CustomEvent).detail.quantity,)
+    })
     this.addEventListener('logout-confirm', (e)=>{
       const logoutRequest = (e as CustomEvent).detail.logoutRequest;
       if(logoutRequest) {
@@ -51,14 +58,14 @@ export class AppMain extends LitElement {
         sessionStorage.removeItem("token");
       }
     })
-    console.log("reviewing logggen In detials");
-    const user = await this.auth.authenticate();
+    // console.log("reviewing logggen In detials");
+    // const user = await this.auth.authenticate();
     
-    if(user) {
-      this.loggedIn = true;
-      this.user = user.user;
-      console.log("User already loggen In !");
-    }
+    // if(user) {
+    //   this.loggedIn = true;
+    //   this.user = user.user;
+    //   console.log("User already loggen In !");
+    // }
   }
 
   setLoggedIn(status: boolean, user?: User) {
@@ -69,8 +76,10 @@ export class AppMain extends LitElement {
 
   addToCart(product: Product, quantity: number) {
 
-    if(this.cart.products.find(p => p.id === product.id)) {
-         
+    const existingProduct = this.cart.products.find(p => p.id === product.id)
+    if(existingProduct) {
+         existingProduct.quantity = quantity;
+         return;
     }
     const productToCart = mapProductToCart(product, quantity);
     
@@ -83,6 +92,23 @@ export class AppMain extends LitElement {
     console.log(user.id);
     
     if(cart) this.cart = cart;
+    this.requestUpdate();
+  }
+
+  removeFromCart(product : Product){
+    const existingProductId = this.cart.products.findIndex(p => p.id === product.id)
+    if(existingProductId) {
+      console.log(existingProductId);
+      this.cart.products.splice(existingProductId, 1);
+      console.log("Deleted!", this.cart.products);
+    }
+  }
+
+  quantityChange(product : Product, quantity: number) {
+    const existingProduct = this.cart.products.find(p=> p.id === product.id)
+    if(existingProduct){
+       existingProduct.quantity = quantity;
+    }
     this.requestUpdate();
   }
 
