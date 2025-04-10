@@ -1,5 +1,5 @@
 import { LitElement, html, css } from "lit";
-import { customElement, property, state} from "lit/decorators.js";
+import { customElement, state} from "lit/decorators.js";
 import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
 import { Cart } from "../constants/GlobalTypes";
@@ -55,7 +55,7 @@ export class CartContainer extends LitElement{
                                             </div>
                                         </td>
                                         <td>
-                                            ${p.quantity}
+                                            <ecom-addtocart .product=${p} @click=${this.requestUpdate()}></ecom-addtocart>
                                         </td>
                                         <td>
                                             <p>$ ${p.discountedTotal}</p>
@@ -93,12 +93,12 @@ export class CartContainer extends LitElement{
         flex-wrap:wrap;
         }
         .carts-container{
-            margin:1rem;
+            margin:3rem;
         }
 
         .primary-data img{
-            height:100px;
-            width:100px;
+            height:80px;
+            width:80px;
             border-radius: 50%;
             margin:0 1rem ;
         }

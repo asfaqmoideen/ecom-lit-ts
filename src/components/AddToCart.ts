@@ -4,25 +4,33 @@ import { consume } from "@lit/context";
 import { loggedInContext, cartContext } from "../contexts/GlobalContexts";
 import { Cart, Product } from "../constants/GlobalTypes";
 import './CustomButton'
+import { Router } from "@vaadin/router";
 
 
 @customElement("ecom-addtocart")
 export class AddtoCart extends LitElement {
     @property({attribute:true}) product :Product | null = null;
-    @consume({context: cartContext}) @state()cart : Cart | null = null;
+    @consume({context: cartContext}) cart : Cart | null = null;
     @consume({context: loggedInContext}) LoggedIn? :boolean;
     @state() quantity = 0;
 
-    private updateInitialQuantity(){
-        const productInCart = this.cart?.products.find(p => p.id === this.product?.id);
-        this.quantity = productInCart?.quantity ? productInCart.quantity : 0;
-    }
-
-    protected updated(): void {
-        this.updateInitialQuantity();
-    }
+    protected willUpdate(changedProps: Map<string, unknown>): void {
+        if (changedProps.has('cart') || changedProps.has('product')) {
+          const productInCart = this.cart?.products.find(p => p.id === this.product?.id);
+          const newQuantity = productInCart?.quantity ?? 0;
+      
+          if (this.quantity !== newQuantity) {
+            this.quantity = newQuantity;
+          }
+        }
+      }
+      
 
     private addToCart() { 
+        if(!this.LoggedIn){
+            Router.go("/login");
+            return;
+        }
         this.quantity++;
         this.dispatchEvent(new CustomEvent("add-to-cart", {
             detail: {
